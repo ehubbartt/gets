@@ -18,6 +18,7 @@ const Modal = () => {
   const [so, setSo] = useState();
   const [date, setDate] = useState("01/01/2021");
   const [URL, setURL] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     let today = new Date();
@@ -30,9 +31,11 @@ const Modal = () => {
   }, []);
 
   const postData = async () => {
+    setIsLoading(true);
     const data = await postParsedText({
       url: URL,
     });
+    setIsLoading(false);
     setDc(data.dateCode);
     setPn(data.partNumber);
     setSo(data.salesOrder);
@@ -59,7 +62,12 @@ const Modal = () => {
     >
       <div className="modal-container">
         <Title />
-        <URLInput setURL={setURL} handleSubmitURL={handleSubmitURL} URL={URL} />
+        <URLInput
+          setURL={setURL}
+          handleSubmitURL={handleSubmitURL}
+          URL={URL}
+          isLoading={isLoading}
+        />
         <Inputs
           setPriority={setPriority}
           setName={setName}
@@ -177,7 +185,7 @@ const Inputs = ({ setPriority, setName, setDc, setPn, setSo, dc, so, pn }) => {
   );
 };
 
-const URLInput = ({ setURL, handleSubmitURL, URL }) => {
+const URLInput = ({ setURL, handleSubmitURL, URL, isLoading }) => {
   return (
     <div id="url-input">
       <div className="form-group" id="user-url-input">
@@ -193,7 +201,7 @@ const URLInput = ({ setURL, handleSubmitURL, URL }) => {
           }}
         />
         <span className="btn" id="url-submit" onClick={handleSubmitURL}>
-          Submit
+          {isLoading ? "Loading..." : "Submit"}
         </span>
       </div>
     </div>
