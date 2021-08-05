@@ -88,13 +88,22 @@ app.post("/text", async (req, res) => {
     result = await computerVisionClient.getReadResult(operation);
   }
   const data = result.analyzeResult.readResults;
+
   for (const page in data) {
     if (data.length > 1) {
       // console.log(`==== Page: ${page}`); need to implement multiple page support
     }
     const lines = data[page].lines;
     for (let i = 0; i < lines.length; i++) {
-      allText.push(lines[i].text);
+      let text = lines[i].text;
+      if (text.includes(":") && text.charAt(text.length - 1) !== ":") {
+        let split = text.split(":");
+        for (let j = 0; j < split.length; j++) {
+          allText.push(split[j]);
+        }
+      } else {
+        allText.push(text);
+      }
     }
   }
   res.send(allText);

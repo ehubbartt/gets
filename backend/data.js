@@ -1,22 +1,26 @@
 export const keys = [
   {
-    string: "date code",
+    strings: ["data code", "date/lot code", "d/c"],
     code: "dateCode",
   },
   {
-    string: "p/n",
+    strings: ["p/n"],
     code: "partNumber",
   },
   {
-    string: "quantity",
+    strings: ["quantity", "qty"],
     code: "quantity",
   },
   {
-    string: "qty",
-    code: "quantity",
-  },
-  {
-    string: "sales order",
+    strings: ["sales order", "so #"],
     code: "salesOrder",
+  },
+  {
+    strings: ["reel #"],
+    code: "reel",
+  },
+  {
+    strings: ["bin #"],
+    code: "bin",
   },
 ];
