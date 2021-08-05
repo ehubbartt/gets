@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useGlobalContext } from "../context";
 import { BsPlusSquare } from "react-icons/bs";
 

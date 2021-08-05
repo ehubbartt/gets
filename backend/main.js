@@ -2,12 +2,12 @@
 // URL images containing printed and/or handwritten text.
 // The URL can point to image files (.jpg/.png/.bmp) or multi-page files (.pdf, .tiff).
 const getsTestUrl = "https://i.imgur.com/cAke54O.jpg";
-const express = require("express");
+import express from "express";
 const app = express();
+import { doesInclude } from "./functions/parsingText.js";
 
-const ComputerVisionClient =
-  require("@azure/cognitiveservices-computervision").ComputerVisionClient;
-const ApiKeyCredentials = require("@azure/ms-rest-js").ApiKeyCredentials;
+import { ComputerVisionClient } from "@azure/cognitiveservices-computervision";
+import { ApiKeyCredentials } from "@azure/ms-rest-js";
 
 /**
  * personal auth tokens
@@ -24,39 +24,6 @@ const computerVisionClient = new ComputerVisionClient(
 // Before Read 3.0, these are "Succeeded" and "Failed"
 const STATUS_SUCCEEDED = "succeeded";
 const STATUS_FAILED = "failed";
-
-// Perform read and await the result from URL
-async function readTextFromURL(client, url) {
-  // To recognize text in a local image, replace client.read() with readTextInStream() as shown:
-  let result = await client.read(url);
-  // Operation ID is last path segment of operationLocation (a URL)
-  let operation = result.operationLocation.split("/").slice(-1)[0];
-
-  // Wait for read recognition to complete
-  // result.status is initially undefined, since it's the result of read
-  while (result.status !== STATUS_SUCCEEDED) {
-    result = await client.getReadResult(operation);
-  }
-  return result.analyzeResult.data; // Return the first page of result. Replace [0] with the desired page if this is a multi-page file such as .pdf or .tiff.
-}
-
-// Prints all text from Read result
-function printRecText(data) {
-  console.log("Recognized text:");
-  for (const page in data) {
-    if (data.length > 1) {
-      console.log(`==== Page: ${page}`);
-    }
-    const result = data[page];
-    if (result.lines.length) {
-      for (const line of result.lines) {
-        console.log(line.words.map((w) => w.text).join(" "));
-      }
-    } else {
-      console.log("No recognized text.");
-    }
-  }
-}
 
 app.use(express.json({ limit: "50mb" }));
 
@@ -76,7 +43,7 @@ app.use((req, res, next) => {
 app.get("/text", async (req, res) => {
   const allText = [];
   let result = await computerVisionClient.read(
-    "https://i.imgur.com/Mjf8um5.jpg"
+    "https://i.imgur.com/cAke54O.jpg"
   );
 
   let operation = result.operationLocation.split("/").slice(-1)[0];
@@ -90,13 +57,25 @@ app.get("/text", async (req, res) => {
     if (data.length > 1) {
       // console.log(`==== Page: ${page}`); need to implement multiple page support
     }
-    const results = data[page].lines;
-    for (let i = 0; i < results.length; i++) {
-      allText.push(results[i].text);
+    const lines = data[page].lines;
+    for (let i = 0; i < lines.length; i++) {
+      let text = lines[i].text;
+      if (text.includes(":") && text.charAt(text.length - 1) !== ":") {
+        let split = text.split(":");
+        for (let j = 0; j < split.length; j++) {
+          allText.push(split[j]);
+        }
+      } else {
+        allText.push(text);
+      }
     }
   }
   res.send(allText);
 });
+
+const test = () => {
+  console.log("test is working");
+};
 
 app.post("/text", async (req, res) => {
   const allText = [];
@@ -113,9 +92,9 @@ app.post("/text", async (req, res) => {
     if (data.length > 1) {
       // console.log(`==== Page: ${page}`); need to implement multiple page support
     }
-    const results = data[page].lines;
-    for (let i = 0; i < results.length; i++) {
-      allText.push(results[i].text);
+    const lines = data[page].lines;
+    for (let i = 0; i < lines.length; i++) {
+      allText.push(lines[i].text);
     }
   }
   res.send(allText);
@@ -123,7 +102,6 @@ app.post("/text", async (req, res) => {
 
 app.post("/text/parsed", async (req, res) => {
   const allText = [];
-  const parsedText = {};
 
   const URL = req.body.url;
   let result = await computerVisionClient.read(URL);
@@ -138,26 +116,24 @@ app.post("/text/parsed", async (req, res) => {
     if (data.length > 1) {
       // console.log(`==== Page: ${page}`); need to implement multiple page support
     }
-    const results = data[page].lines;
-    for (let i = 0; i < results.length; i++) {
-      allText.push(results[i].text);
+    const lines = data[page].lines;
+    for (let i = 0; i < lines.length; i++) {
+      let text = lines[i].text;
+      if (text.includes(":") && text.charAt(text.length - 1) !== ":") {
+        let split = text.split(":");
+        for (let j = 0; j < split.length; j++) {
+          allText.push(split[j]);
+        }
+      } else {
+        allText.push(text);
+      }
     }
   }
+  let parsedText = {};
   for (let i = 0; i < allText.length; i++) {
-    if (allText[i].toLowerCase() === "date code:") {
-      parsedText.dateCode = allText[i + 1];
-    }
-    if (allText[i].toLowerCase() === "cust p/n:") {
-      parsedText.partNumber = allText[i + 1];
-    }
-    if (allText[i].toLowerCase() === "cust po :") {
-      parsedText.custPO = allText[i + 1];
-    }
-    if (allText[i].toLowerCase() === "quantity:") {
-      parsedText.quantity = allText[i + 1];
-    }
-    if (allText[i].toLowerCase() === "sales order :") {
-      parsedText.salesOrder = allText[i + 1];
+    const code = doesInclude(allText[i].toLowerCase());
+    if (code) {
+      parsedText[`${code}`] = allText[i + 1];
     }
   }
   res.send(parsedText);
