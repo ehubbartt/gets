@@ -1,10 +1,10 @@
 export const keys = [
   {
-    strings: ["data code", "date/lot code", "d/c"],
+    strings: ["date code", "date/lot code", "d/c"],
     code: "dateCode",
   },
   {
-    strings: ["p/n"],
+    strings: ["cust p/n", "(1p)"],
     code: "partNumber",
   },
   {
@@ -12,7 +12,7 @@ export const keys = [
     code: "quantity",
   },
   {
-    strings: ["sales order", "so #"],
+    strings: ["sales order", "so #", "purchase order"],
     code: "salesOrder",
   },
   {
@@ -22,5 +22,13 @@ export const keys = [
   {
     strings: ["bin #"],
     code: "bin",
+  },
+  {
+    strings: ["lot#"],
+    code: "lot",
+  },
+  {
+    strings: ["mfg"],
+    code: "manufacturer",
   },
 ];

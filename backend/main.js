@@ -142,7 +142,12 @@ app.post("/text/parsed", async (req, res) => {
   for (let i = 0; i < allText.length; i++) {
     const code = doesInclude(allText[i].toLowerCase());
     if (code) {
-      parsedText[`${code}`] = allText[i + 1];
+      let nextWord = allText[i + 1];
+      nextWord = nextWord.replace(" ", "");
+      if (code === "dateCode") {
+        nextWord = nextWord.substring(0, 4);
+      }
+      parsedText[`${code}`] = nextWord;
     }
   }
   res.send(parsedText);
