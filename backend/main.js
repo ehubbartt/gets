@@ -66,16 +66,12 @@ app.get("/text", async (req, res) => {
           allText.push(split[j]);
         }
       } else {
-        allText.push(text);
+        allText.push(text.replace(":", ""));
       }
     }
   }
   res.send(allText);
 });
-
-const test = () => {
-  console.log("test is working");
-};
 
 app.post("/text", async (req, res) => {
   const allText = [];
@@ -134,7 +130,7 @@ app.post("/text/parsed", async (req, res) => {
           allText.push(split[j]);
         }
       } else {
-        allText.push(text);
+        allText.push(text.replace(":", ""));
       }
     }
   }

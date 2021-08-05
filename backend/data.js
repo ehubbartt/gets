@@ -4,11 +4,11 @@ export const keys = [
     code: "dateCode",
   },
   {
-    strings: ["cust p/n", "(1p)"],
+    strings: ["cust p/n", "(1p)", "<p>"],
     code: "partNumber",
   },
   {
-    strings: ["quantity", "qty"],
+    strings: ["quantity", "qty", "<q>"],
     code: "quantity",
   },
   {
