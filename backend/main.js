@@ -11,6 +11,8 @@ import { ApiKeyCredentials } from "@azure/ms-rest-js";
 
 /**
  * personal auth tokens
+ * please put your own auth key and endpoint here so that we dont flood
+ * the same api calls
  */
 const key = "d975bfc53a0344559b65c73af2f67fc3";
 const endpoint = "https://gets-test.cognitiveservices.azure.com/";
@@ -40,11 +42,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/text", async (req, res) => {
-  const allText = [];
-  let result = await computerVisionClient.read(
-    "https://i.imgur.com/cAke54O.jpg"
-  );
+/**
+ * returns all the lines from the API request
+ * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
+ */
+app.post("/lines", async (req, res) => {
+  const URL = req.body.url;
+  let result = await computerVisionClient.read(URL);
 
   let operation = result.operationLocation.split("/").slice(-1)[0];
 
@@ -53,26 +57,15 @@ app.get("/text", async (req, res) => {
   }
   const data = result.analyzeResult.readResults;
 
-  for (const page in data) {
-    if (data.length > 1) {
-      // console.log(`==== Page: ${page}`); need to implement multiple page support
-    }
-    const lines = data[page].lines;
-    for (let i = 0; i < lines.length; i++) {
-      let text = lines[i].text;
-      if (text.includes(":") && text.charAt(text.length - 1) !== ":") {
-        let split = text.split(":");
-        for (let j = 0; j < split.length; j++) {
-          allText.push(split[j]);
-        }
-      } else {
-        allText.push(text.replace(":", ""));
-      }
-    }
-  }
-  res.send(allText);
+  const lines = data[0].lines;
+
+  res.send(lines);
 });
 
+/**
+ * returns all the text from the image in an array
+ * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
+ */
 app.post("/text", async (req, res) => {
   const allText = [];
   const URL = req.body.url;
@@ -105,6 +98,14 @@ app.post("/text", async (req, res) => {
   res.send(allText);
 });
 
+/**
+ * returns a parsed version of all the text from the image in an object
+ * containing only the text that we want from the image instead of all the text
+ *
+ * check ../data for more info on the keys
+ *
+ * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
+ */
 app.post("/text/parsed", async (req, res) => {
   const allText = [];
 
@@ -143,7 +144,7 @@ app.post("/text/parsed", async (req, res) => {
       if (code === "dateCode") {
         nextWord = nextWord.substring(0, 4);
       }
-      parsedText[`${code}`] = nextWord;
+      parsedText[`${code}`] = nextWord; //adds to the object based on the code value from the key
     }
   }
   res.send(parsedText);

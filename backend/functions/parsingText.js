@@ -1,5 +1,11 @@
 import { keys } from "../data.js";
 
+/**
+ * computes the similarity between two strings as a percent
+ * @param {string} s1 first string you want to compare
+ * @param {string} s2 seconds string you want to compare
+ * @returns the percent similarity of the two strings
+ */
 const similarity = (s1, s2) => {
   var longer = s1;
   var shorter = s2;
@@ -16,6 +22,13 @@ const similarity = (s1, s2) => {
   );
 };
 
+/**
+ * helper function for similarity(). Computes the edit distance/cost
+ * between two strings
+ * @param {string} s1 first string you want to compare
+ * @param {string} s2 seconds string you want to compare
+ * @returns edit cost
+ */
 const editDistance = (s1, s2) => {
   s1 = s1.toLowerCase();
   s2 = s2.toLowerCase();
@@ -40,7 +53,12 @@ const editDistance = (s1, s2) => {
   return costs[s2.length];
 };
 
-//TODO: make tolerance in match
+/**
+ * takes in a string and compares the string with the our keys.
+ * checks to see if the string matches one of the keys
+ * @param {string} string
+ * @returns code from key object if matching, otherwise returns undefined
+ */
 export const doesInclude = (string) => {
   for (let i = 0; i < keys.length; i++) {
     let key = keys[i];
