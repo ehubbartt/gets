@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 import { postParsedText } from "../services/getData";
 import { useGlobalContext } from "../context";
 
+/**
+ * @returns job inputs to be placed inside the modal
+ */
 const JobInputs = () => {
   const { setIsJobInputModalOpen, jobs, setJobs, closeJobInputModal } =
     useGlobalContext();

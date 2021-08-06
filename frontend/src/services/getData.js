@@ -1,5 +1,8 @@
-import axios from "axios";
-
+/**
+ * does a post request to get parsed text from the api
+ * @param {object} data contains the image url
+ * @returns
+ */
 export const postParsedText = async (data = {}) => {
   const resp = await fetch("http://localhost:5000/text/parsed", {
     method: "POST",
@@ -11,10 +14,4 @@ export const postParsedText = async (data = {}) => {
     body: JSON.stringify(data),
   });
   return resp.json();
-};
-
-export const getText = () => {
-  axios.get("http://localhost:5000/text").then((response) => {
-    console.log(response);
-  });
 };
