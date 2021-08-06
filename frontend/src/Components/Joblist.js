@@ -3,7 +3,7 @@ import { useGlobalContext } from "../context";
 import { BsPlusSquare } from "react-icons/bs";
 
 const Joblist = () => {
-  const { jobs, openModal } = useGlobalContext();
+  const { jobs, openJobInputModal } = useGlobalContext();
 
   return (
     <div id="joblist-container">
@@ -13,7 +13,7 @@ const Joblist = () => {
         id="plus-icon"
         className="btn"
         onClick={() => {
-          openModal();
+          openJobInputModal();
         }}
       />
     </div>

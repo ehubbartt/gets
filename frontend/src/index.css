@@ -165,7 +165,6 @@ header > h1 {
   background: rgba(0, 0, 0, 0.5);
   display: grid;
   place-items: center;
-  transition: all 0.3s linear;
   visibility: hidden;
   z-index: -1;
 }

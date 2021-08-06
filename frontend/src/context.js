@@ -4,6 +4,7 @@ import { jobsData } from "./data";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
+  const [isJobInputModalOpen, setIsJobInputModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [jobs, setJobs] = useState(jobsData);
 
@@ -12,6 +13,20 @@ const AppProvider = ({ children }) => {
   };
   const closeModal = () => {
     setIsModalOpen(false);
+    turnOffAllModals();
+  };
+
+  const openJobInputModal = () => {
+    setIsJobInputModalOpen(true);
+    openModal();
+  };
+  const closeJobInputModal = () => {
+    setIsJobInputModalOpen(false);
+    closeModal();
+  };
+
+  const turnOffAllModals = () => {
+    setIsJobInputModalOpen(false);
   };
 
   return (
@@ -19,6 +34,10 @@ const AppProvider = ({ children }) => {
       value={{
         jobs,
         setJobs,
+        isJobInputModalOpen,
+        setIsJobInputModalOpen,
+        openJobInputModal,
+        closeJobInputModal,
         isModalOpen,
         setIsModalOpen,
         openModal,
