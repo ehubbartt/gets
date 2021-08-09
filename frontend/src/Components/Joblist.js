@@ -1,24 +1,16 @@
 import React from "react";
 import { useGlobalContext } from "../context";
-import { BsPlusSquare } from "react-icons/bs";
 
 /**
  * @returns the list of current jobs
  */
 const Joblist = () => {
-  const { jobs, openJobInputModal } = useGlobalContext();
+  const { jobs } = useGlobalContext();
 
   return (
     <div id="joblist-container">
       <Title />
       {jobs.length > 0 && <Jobs jobs={jobs} />}
-      <BsPlusSquare
-        id="plus-icon"
-        className="btn"
-        onClick={() => {
-          openJobInputModal();
-        }}
-      />
     </div>
   );
 };

@@ -9,7 +9,7 @@ export const keys = [
     code: "dateCode",
   },
   {
-    strings: ["cust p/n", "(1p)", "<p>"],
+    strings: ["cust p/n", "(1p)", "<p>", "p/n"],
     code: "partNumber",
   },
   {

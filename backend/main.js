@@ -58,7 +58,6 @@ app.post("/lines", async (req, res) => {
   const data = result.analyzeResult.readResults;
 
   const lines = data[0].lines;
-
   res.send(lines);
 });
 
@@ -135,6 +134,7 @@ app.post("/text/parsed", async (req, res) => {
       }
     }
   }
+  //TODO: need to implement something where if there are multiple matches for a key it will give both options
   let parsedText = {};
   for (let i = 0; i < allText.length; i++) {
     const code = doesInclude(allText[i].toLowerCase());

@@ -3,10 +3,10 @@ import React from "react";
 /**
  * @returns a header for the page
  */
-const Header = () => {
+const Header = ({ title }) => {
   return (
     <header>
-      <h1>Job List</h1>
+      <h1>{title}</h1>
     </header>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { postParsedText } from "../services/getData";
 import { useGlobalContext } from "../context";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 /**
  * @returns job inputs to be placed inside the modal
@@ -192,7 +193,7 @@ const URLInput = ({ setURL, handleSubmitURL, URL, isLoading }) => {
           }}
         />
         <span className="btn" id="url-submit" onClick={handleSubmitURL}>
-          {isLoading ? "Loading..." : "Submit"}
+          {isLoading ? <CircularProgress size={20} color="white" /> : "Submit"}
         </span>
       </div>
     </div>

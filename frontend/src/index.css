@@ -10,7 +10,7 @@ body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
 
@@ -20,7 +20,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Archivo", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 500;
 }
 
@@ -44,7 +44,7 @@ code {
   --group-background-focus: #678efe;
 }
 
-nav {
+#navbar {
   position: fixed;
   left: 0;
   top: 0;
@@ -55,10 +55,47 @@ nav {
   z-index: 99;
   transition: all 0.5s ease;
   box-shadow: 1px 0 5px -2px #888;
+  display: flex;
+  justify-content: flex-start;
 }
 
-nav > ul {
-  list-style: none;
+#nav-center {
+  margin-left: 20px;
+}
+
+#nav-center > section {
+  margin-top: 20px;
+}
+
+.nav-links {
+  display: flex;
+  list-style-type: none;
+  flex-direction: column;
+  margin-left: 5px;
+}
+.nav-links a {
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: black;
+}
+
+.nav-link {
+  color: #888;
+}
+
+.nav-icon {
+  margin-right: 5px;
+}
+
+.nav-section {
+  color: #9a9a9b;
+}
+
+.link-selected {
+  color: black;
 }
 
 .main-section {
@@ -132,13 +169,6 @@ header > h1 {
 
 .name {
   margin-left: auto;
-}
-
-#plus-icon {
-  align-self: center;
-  margin-top: auto;
-  width: 25px;
-  height: 25px;
 }
 
 .btn {
@@ -314,10 +344,22 @@ input {
   background: var(--group-background-focus);
   border-color: var(--group-border-focus);
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form-group:focus-within > span {
   color: var(--group-color-focus);
   background: var(--group-background-focus);
   border-color: var(--group-border-focus);
+}
+
+#add-fab {
+  position: absolute;
+  left: calc(100vw - 256px);
+  top: calc(100vh - 56px);
+  margin: -10px;
+  background-color: var(--group-background-focus);
+  color: whitesmoke;
 }
