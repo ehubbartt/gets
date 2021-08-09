@@ -86,9 +86,10 @@ code {
 
 .nav-link {
   color: #888;
+  display: flex;
 }
 
-.nav-icon {
+li > a > svg {
   margin-right: 5px;
 }
 
@@ -132,7 +133,7 @@ header > h1 {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh * 0.85);
+  max-height: calc(100vh * 0.85);
 }
 
 .scroll-container {

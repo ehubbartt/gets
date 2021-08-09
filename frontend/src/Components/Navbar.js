@@ -1,4 +1,5 @@
 import React from "react";
+import { icons } from "react-icons/lib";
 import { NavLink } from "react-router-dom";
 import { navData } from "../data";
 
@@ -43,7 +44,7 @@ const NavSection = ({ links, section }) => {
 
 const SingleLink = ({ url, text, icon, exact }) => {
   return (
-    <li>
+    <li className="single-link">
       {exact ? (
         <NavLink
           className="nav-link"
@@ -52,12 +53,12 @@ const SingleLink = ({ url, text, icon, exact }) => {
           activeClassName="link-selected"
         >
           {icon}
-          {text}
+          <h5>{text}</h5>
         </NavLink>
       ) : (
         <NavLink className="nav-link" to={url} activeClassName="link-selected">
           {icon}
-          {text}
+          <h5>{text}</h5>
         </NavLink>
       )}
     </li>
