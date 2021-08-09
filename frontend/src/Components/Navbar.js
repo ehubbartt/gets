@@ -32,6 +32,7 @@ const NavSection = ({ links, section }) => {
               url={link.url}
               text={link.text}
               icon={link.icon}
+              exact={link.exact}
             ></SingleLink>
           );
         })}
@@ -40,18 +41,25 @@ const NavSection = ({ links, section }) => {
   );
 };
 
-const SingleLink = ({ url, text, icon }) => {
+const SingleLink = ({ url, text, icon, exact }) => {
   return (
     <li>
-      <NavLink
-        className="nav-link"
-        to={url}
-        exact
-        activeClassName="link-selected"
-      >
-        {icon}
-        {text}
-      </NavLink>
+      {exact ? (
+        <NavLink
+          className="nav-link"
+          to={url}
+          exact
+          activeClassName="link-selected"
+        >
+          {icon}
+          {text}
+        </NavLink>
+      ) : (
+        <NavLink className="nav-link" to={url} activeClassName="link-selected">
+          {icon}
+          {text}
+        </NavLink>
+      )}
     </li>
   );
 };
