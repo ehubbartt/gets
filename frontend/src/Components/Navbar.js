@@ -1,50 +1,59 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { AiOutlineHome } from "react-icons/ai";
-import { CgWorkAlt } from "react-icons/cg";
+import { navData } from "../data";
 
 const Navbar = () => {
   return (
     <nav id="navbar">
       <div id="nav-center">
-        <section id="main">
-          <h3 className="nav-section">Main</h3>
-          <ul className="nav-links">
-            <li>
-              <NavLink
-                className="nav-link"
-                to="/"
-                exact
-                activeClassName="link-selected"
-              >
-                <AiOutlineHome className="nav-icon" />
-                Home
-              </NavLink>
-            </li>
-          </ul>
-        </section>
-        <section id="orders">
-          <div className="nav-section">
-            <h3 className="nav-section">Orders</h3>
-          </div>
-          <ul className="nav-links">
-            <li>
-              <NavLink
-                className="nav-link"
-                to="/jobs"
-                activeClassName="link-selected"
-              >
-                <CgWorkAlt className="nav-icon" />
-                Jobs
-              </NavLink>
-            </li>
-          </ul>
-        </section>
+        {navData.map((data) => {
+          return (
+            <NavSection
+              key={data.sectionid}
+              links={data.links}
+              section={data.section}
+            ></NavSection>
+          );
+        })}
       </div>
     </nav>
   );
 };
 
-const hover = () => {};
+const NavSection = ({ links, section }) => {
+  return (
+    <section id={section}>
+      <h3 className="nav-section">{section}</h3>
+      <ul className="nav-links">
+        {links.map((link) => {
+          return (
+            <SingleLink
+              key={link.id}
+              url={link.url}
+              text={link.text}
+              icon={link.icon}
+            ></SingleLink>
+          );
+        })}
+      </ul>
+    </section>
+  );
+};
+
+const SingleLink = ({ url, text, icon }) => {
+  return (
+    <li>
+      <NavLink
+        className="nav-link"
+        to={url}
+        exact
+        activeClassName="link-selected"
+      >
+        {icon}
+        {text}
+      </NavLink>
+    </li>
+  );
+};
 
 export default Navbar;

@@ -62,6 +62,7 @@ app.post("/lines", async (req, res) => {
 });
 
 /**
+ * post req of http://localhost:5000/param
  * returns all the text from the image in an array
  * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
  */
