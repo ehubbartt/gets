@@ -10,7 +10,9 @@ const Joblist = () => {
   return (
     <div id="joblist-container">
       <Title />
-      {jobs.length > 0 && <Jobs jobs={jobs} />}
+      <div className="scroll-container">
+        {jobs.length > 0 && <Jobs jobs={jobs} />}
+      </div>
     </div>
   );
 };
