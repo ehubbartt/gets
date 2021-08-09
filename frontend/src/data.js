@@ -9,7 +9,7 @@ export const job = {};
 export const navData = [
   {
     sectionid: 1,
-    section: "Main",
+    section: "MAIN",
     links: [
       {
         id: 11,
@@ -23,7 +23,7 @@ export const navData = [
   },
   {
     sectionid: 2,
-    section: "Orders",
+    section: "ORDERS",
     links: [
       {
         id: 21,

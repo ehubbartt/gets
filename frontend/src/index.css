@@ -72,6 +72,8 @@ code {
   list-style-type: none;
   flex-direction: column;
   margin-left: 5px;
+  border-left: 1px solid #888;
+  padding: 2px;
 }
 .nav-links a {
   font-size: 1.2rem;
