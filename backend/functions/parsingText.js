@@ -71,3 +71,35 @@ export const doesInclude = (string) => {
     }
   }
 };
+
+export const splitOnColon = (lines) => {
+  const allText = [];
+  for (let i = 0; i < lines.length; i++) {
+    let text = lines[i].text;
+    if (text.includes(":") && text.charAt(text.length - 1) !== ":") {
+      let split = text.split(":");
+      for (let j = 0; j < split.length; j++) {
+        allText.push(split[j]);
+      }
+    } else {
+      allText.push(text);
+    }
+  }
+  return allText;
+};
+
+export const createParsedText = (allText) => {
+  const parsedText = {};
+  for (let i = 0; i < allText.length; i++) {
+    const code = doesInclude(allText[i].toLowerCase());
+    if (code) {
+      let nextWord = allText[i + 1];
+      nextWord = nextWord.replace(" ", "");
+      if (code === "dateCode") {
+        nextWord = nextWord.substring(0, 4);
+      }
+      parsedText[`${code}`] = nextWord; //adds to the object based on the code value from the key
+    }
+  }
+  return parsedText;
+};

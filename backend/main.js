@@ -4,14 +4,14 @@
 const getsTestUrl = "https://i.imgur.com/cAke54O.jpg";
 import express from "express";
 const app = express();
-import { doesInclude } from "./functions/parsingText.js";
+import { splitOnColon, createParsedText } from "./functions/parsingText.js";
 
 import { ComputerVisionClient } from "@azure/cognitiveservices-computervision";
 import { ApiKeyCredentials } from "@azure/ms-rest-js";
 
 /**
  * personal auth tokens
- * please put your own auth key and endpoint here so that we dont flood
+ * please put your own auth key and endpoint here so that we don't flood
  * the same api calls
  */
 const key = "d975bfc53a0344559b65c73af2f67fc3";
@@ -67,7 +67,6 @@ app.post("/lines", async (req, res) => {
  * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
  */
 app.post("/text", async (req, res) => {
-  const allText = [];
   const URL = req.body.url;
   let result = await computerVisionClient.read(URL);
 
@@ -80,22 +79,12 @@ app.post("/text", async (req, res) => {
 
   for (const page in data) {
     if (data.length > 1) {
-      // console.log(`==== Page: ${page}`); need to implement multiple page support
+      // TODO:console.log(`==== Page: ${page}`); need to implement multiple page support
     }
     const lines = data[page].lines;
-    for (let i = 0; i < lines.length; i++) {
-      let text = lines[i].text;
-      if (text.includes(":") && text.charAt(text.length - 1) !== ":") {
-        let split = text.split(":");
-        for (let j = 0; j < split.length; j++) {
-          allText.push(split[j]);
-        }
-      } else {
-        allText.push(text);
-      }
-    }
+    const allText = splitOnColon(lines);
+    res.send(allText);
   }
-  res.send(allText);
 });
 
 /**
@@ -107,7 +96,7 @@ app.post("/text", async (req, res) => {
  * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
  */
 app.post("/text/parsed", async (req, res) => {
-  const allText = [];
+  let allText = [];
 
   const URL = req.body.url;
   let result = await computerVisionClient.read(URL);
@@ -123,31 +112,10 @@ app.post("/text/parsed", async (req, res) => {
       // console.log(`==== Page: ${page}`); need to implement multiple page support
     }
     const lines = data[page].lines;
-    for (let i = 0; i < lines.length; i++) {
-      let text = lines[i].text;
-      if (text.includes(":") && text.charAt(text.length - 1) !== ":") {
-        let split = text.split(":");
-        for (let j = 0; j < split.length; j++) {
-          allText.push(split[j]);
-        }
-      } else {
-        allText.push(text.replace(":", ""));
-      }
-    }
+    allText = splitOnColon(lines);
   }
   //TODO: need to implement something where if there are multiple matches for a key it will give both options
-  let parsedText = {};
-  for (let i = 0; i < allText.length; i++) {
-    const code = doesInclude(allText[i].toLowerCase());
-    if (code) {
-      let nextWord = allText[i + 1];
-      nextWord = nextWord.replace(" ", "");
-      if (code === "dateCode") {
-        nextWord = nextWord.substring(0, 4);
-      }
-      parsedText[`${code}`] = nextWord; //adds to the object based on the code value from the key
-    }
-  }
+  const parsedText = createParsedText(allText);
   res.send(parsedText);
 });
 
