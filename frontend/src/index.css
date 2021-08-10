@@ -109,8 +109,8 @@ li > a > svg {
   color: #494949;
 }
 
-.nav-link:hover,
-.nav-link:focus {
+.nav-link:hover:not(.link-selected),
+.nav-link:focus:not(.link-selected) {
   color: var(--link-selected-color);
 }
 
