@@ -1,10 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { navData } from "../data";
+import { AiOutlineMenuFold } from "react-icons/ai";
+import { iconStyles } from "../data";
+import { useGlobalContext } from "../context";
 
 const Navbar = () => {
+  const { isNavActive, setIsNavActive } = useGlobalContext();
   return (
-    <nav id="navbar">
+    <nav className={isNavActive ? "navbar show-navbar" : "navbar"}>
+      <AiOutlineMenuFold
+        className="menu-in"
+        style={iconStyles.menuIcon}
+        onClick={() => {
+          setIsNavActive(false);
+        }}
+      ></AiOutlineMenuFold>
       <div id="nav-center">
         {navData.map((data) => {
           return (

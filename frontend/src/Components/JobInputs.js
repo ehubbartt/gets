@@ -47,6 +47,7 @@ const JobInputs = () => {
     postData();
   };
 
+  //FIXME: there is a memory leak here if you refresh the page too fast
   useEffect(() => {
     const abortController = new AbortController();
     const handleSubmitJob = async () => {
