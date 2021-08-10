@@ -16,7 +16,6 @@ function App() {
       allLinks.push(links[j]);
     }
   }
-
   return (
     <Router>
       <Navbar />

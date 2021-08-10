@@ -4,6 +4,9 @@
 const getsTestUrl = "https://i.imgur.com/cAke54O.jpg";
 import express from "express";
 const app = express();
+import mongoose from "mongoose";
+import mongodb from "mongodb";
+import { OrderModel } from "./models/job-list-model.js";
 import { splitOnColon, createParsedText } from "./functions/parsingText.js";
 
 import { ComputerVisionClient } from "@azure/cognitiveservices-computervision";
@@ -16,6 +19,8 @@ import { ApiKeyCredentials } from "@azure/ms-rest-js";
  */
 const key = "d975bfc53a0344559b65c73af2f67fc3";
 const endpoint = "https://gets-test.cognitiveservices.azure.com/";
+const mongoURI =
+  "mongodb+srv://admin:admin@gets.ogmrc.mongodb.net/gets?retryWrites=true&w=majority";
 
 const computerVisionClient = new ComputerVisionClient(
   new ApiKeyCredentials({ inHeader: { "Ocp-Apim-Subscription-Key": key } }),
@@ -117,6 +122,26 @@ app.post("/text/parsed", async (req, res) => {
   //TODO: need to implement something where if there are multiple matches for a key it will give both options
   const parsedText = createParsedText(allText);
   res.send(parsedText);
+});
+
+app.get("/all-orders", async (req, res) => {
+  mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  const orders = await OrderModel.find({});
+  mongoose.connection.close();
+  res.send(orders);
+});
+
+app.post("/create-order", async (req, res) => {
+  const order = req.body;
+  mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  const response = await OrderModel.create(order);
+  res.json(response);
 });
 
 app.listen(5000);

@@ -6,19 +6,19 @@
 export const keys = [
   {
     strings: ["date code", "date/lot code", "d/c"],
-    code: "dateCode",
+    code: "dc",
   },
   {
     strings: ["cust p/n", "(1p)", "<p>", "p/n"],
-    code: "partNumber",
+    code: "pn",
   },
   {
     strings: ["quantity", "qty", "<q>"],
-    code: "quantity",
+    code: "qty",
   },
   {
     strings: ["sales order", "so #", "purchase order"],
-    code: "salesOrder",
+    code: "so",
   },
   {
     strings: ["reel #"],

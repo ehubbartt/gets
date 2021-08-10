@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context";
-
+import { getAllOrders } from "../services/orders.db";
 /**
  * @returns the list of current jobs
  */
 const Joblist = () => {
-  const { jobs } = useGlobalContext();
+  const { jobs, setJobs } = useGlobalContext();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getAllOrders();
+      setJobs(data);
+      setIsLoading(false);
+    })();
+  }, [setJobs]);
 
   return (
     <div id="joblist-container">
       <Title />
-      <div className="scroll-container">
-        {jobs.length > 0 && <Jobs jobs={jobs} />}
-      </div>
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : (
+        <div className="scroll-container">
+          {jobs.length > 0 && <Jobs jobs={jobs} />}
+        </div>
+      )}
     </div>
   );
 };
@@ -34,7 +47,7 @@ const Jobs = ({ jobs }) => {
   return (
     <div className="jobs">
       {jobs.map((job) => {
-        return <Job key={job.id} job={job}></Job>;
+        return <Job key={job._id} job={job}></Job>;
       })}
     </div>
   );

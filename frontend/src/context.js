@@ -7,6 +7,14 @@ const AppProvider = ({ children }) => {
   const [isJobInputModalOpen, setIsJobInputModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [jobs, setJobs] = useState(jobsData);
+  const [order, setOrder] = useState({
+    priority: null,
+    name: null,
+    datecode: null,
+    pn: null,
+    so: null,
+    date: null,
+  });
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -42,6 +50,8 @@ const AppProvider = ({ children }) => {
         setIsModalOpen,
         openModal,
         closeModal,
+        order,
+        setOrder,
       }}
     >
       {children}

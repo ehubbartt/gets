@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { postParsedText } from "../services/getData";
+import { postParsedText } from "../services/get-text";
 import { useGlobalContext } from "../context";
+import { createOrder } from "../services/orders.db";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 /**
  * @returns job inputs to be placed inside the modal
  */
 const JobInputs = () => {
-  const { setIsJobInputModalOpen, jobs, setJobs, closeJobInputModal } =
-    useGlobalContext();
+  const {
+    setIsJobInputModalOpen,
+    jobs,
+    setJobs,
+    closeJobInputModal,
+    order,
+    setOrder,
+  } = useGlobalContext();
 
-  const [priority, setPriority] = useState(1);
-  const [name, setName] = useState("default name");
-  const [dc, setDc] = useState();
-  const [pn, setPn] = useState();
-  const [so, setSo] = useState();
   const [date, setDate] = useState("01/01/2021");
   const [URL, setURL] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(false);
+  const [isOrdersLoading, setIsOrdersLoading] = useState(false);
 
   useEffect(() => {
     let today = new Date();
@@ -28,32 +30,47 @@ const JobInputs = () => {
 
     today = mm + "/" + dd + "/" + yyyy;
     setDate(today);
+    setOrder({ ...order, date: date });
   }, []);
 
   const postData = async () => {
-    setIsLoading(true);
+    setIsImageLoading(true);
     const data = await postParsedText({
       url: URL,
     });
-    setIsLoading(false);
-    setDc(data.dateCode);
-    setPn(data.partNumber);
-    setSo(data.salesOrder);
+    setIsImageLoading(false);
+    setOrder({ ...order, ...data });
+    console.log(order);
   };
 
   const handleSubmitURL = () => {
     postData();
   };
 
-  const handleSubmitJob = () => {
-    setIsJobInputModalOpen(false);
-    setPriority(1);
-    setName("default name");
-    setDc();
-    setPn();
-    setSo();
-    setURL("");
-  };
+  useEffect(() => {
+    const abortController = new AbortController();
+    const handleSubmitJob = async () => {
+      closeJobInputModal();
+      setIsJobInputModalOpen(false);
+      setURL("");
+      setOrder({ date: date });
+    };
+    if (isOrdersLoading) {
+      const fetchData = async () => {
+        try {
+          const curOrder = await createOrder(order);
+          setJobs([...jobs, curOrder]);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchData();
+      handleSubmitJob();
+    }
+    return () => {
+      abortController.abort();
+    };
+  }, [isOrdersLoading]);
 
   return (
     <>
@@ -62,35 +79,13 @@ const JobInputs = () => {
         setURL={setURL}
         handleSubmitURL={handleSubmitURL}
         URL={URL}
-        isLoading={isLoading}
+        isImageLoading={isImageLoading}
       />
-      <Inputs
-        setPriority={setPriority}
-        setName={setName}
-        setDc={setDc}
-        setPn={setPn}
-        setSo={setSo}
-        dc={dc}
-        pn={pn}
-        so={so}
-      />
+      <Inputs order={order} setOrder={setOrder} />
       <button
         className="btn submit-btn"
         onClick={() => {
-          setJobs([
-            ...jobs,
-            {
-              id: uuidv4(),
-              priority: priority,
-              name: name,
-              dc: dc,
-              pn: pn,
-              so: so,
-              date: date,
-            },
-          ]);
-          closeJobInputModal();
-          handleSubmitJob();
+          setIsOrdersLoading(true);
         }}
       >
         SUBMIT
@@ -107,7 +102,7 @@ const Title = () => {
   );
 };
 
-const Inputs = ({ setPriority, setName, setDc, setPn, setSo, dc, so, pn }) => {
+const Inputs = ({ order, setOrder }) => {
   return (
     <div id="input-container">
       <div className="form-group">
@@ -118,7 +113,7 @@ const Inputs = ({ setPriority, setName, setDc, setPn, setSo, dc, so, pn }) => {
           placeholder="1"
           type="text"
           onChange={(e) => {
-            setPriority(e.target.value);
+            setOrder({ ...order, priority: e.target.value });
           }}
         />
       </div>
@@ -130,7 +125,7 @@ const Inputs = ({ setPriority, setName, setDc, setPn, setSo, dc, so, pn }) => {
           type="text"
           placeholder="default name"
           onChange={(e) => {
-            setName(e.target.value);
+            setOrder({ ...order, name: e.target.value });
           }}
         />
       </div>
@@ -140,10 +135,10 @@ const Inputs = ({ setPriority, setName, setDc, setPn, setSo, dc, so, pn }) => {
           className="form-field"
           id="dc-input"
           type="text"
-          value={dc || ""}
+          value={order.dc || ""}
           placeholder="Date Code"
           onChange={(e) => {
-            setDc(e.target.value);
+            setOrder({ ...order, dc: e.target.value });
           }}
         />
       </div>
@@ -153,10 +148,10 @@ const Inputs = ({ setPriority, setName, setDc, setPn, setSo, dc, so, pn }) => {
           className="form-field"
           id="pn-input"
           type="text"
-          value={pn || ""}
+          value={order.pn || ""}
           placeholder="Part Number"
           onChange={(e) => {
-            setPn(e.target.value);
+            setOrder({ ...order, pn: e.target.value });
           }}
         />
       </div>
@@ -166,10 +161,10 @@ const Inputs = ({ setPriority, setName, setDc, setPn, setSo, dc, so, pn }) => {
           className="form-field"
           id="so-input"
           type="text"
-          value={so || ""}
+          value={order.so || ""}
           placeholder="Sales Order"
           onChange={(e) => {
-            setSo(e.target.value);
+            setOrder({ ...order, so: e.target.value });
           }}
         />
       </div>
@@ -177,7 +172,7 @@ const Inputs = ({ setPriority, setName, setDc, setPn, setSo, dc, so, pn }) => {
   );
 };
 
-const URLInput = ({ setURL, handleSubmitURL, URL, isLoading }) => {
+const URLInput = ({ setURL, handleSubmitURL, URL, isImageLoading }) => {
   return (
     <div id="url-input">
       <div className="form-group" id="user-url-input">
@@ -193,7 +188,11 @@ const URLInput = ({ setURL, handleSubmitURL, URL, isLoading }) => {
           }}
         />
         <span className="btn" id="url-submit" onClick={handleSubmitURL}>
-          {isLoading ? <CircularProgress size={20} color="white" /> : "Submit"}
+          {isImageLoading ? (
+            <CircularProgress size={20} style={{ color: "#fff" }} />
+          ) : (
+            "Submit"
+          )}
         </span>
       </div>
     </div>

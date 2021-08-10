@@ -1,5 +1,4 @@
 import React from "react";
-import { icons } from "react-icons/lib";
 import { NavLink } from "react-router-dom";
 import { navData } from "../data";
 
