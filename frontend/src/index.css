@@ -42,6 +42,7 @@ code {
   --group-color-focus: #fff;
   --group-border-focus: var(--input-border-focus);
   --group-background-focus: #678efe;
+  --link-selected-color: #678efe;
 }
 
 #navbar {
@@ -57,10 +58,6 @@ code {
   box-shadow: 1px 0 5px -2px #888;
   display: flex;
   justify-content: flex-start;
-}
-
-#nav-center {
-  margin-left: 20px;
 }
 
 #nav-center > section {
@@ -80,27 +77,30 @@ code {
   text-decoration: none;
 }
 
-.nav-links a:hover {
-  color: black;
-}
-
 .nav-link {
   color: #888;
   display: flex;
+  padding: 5px;
 }
 
 li > a > svg {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
 .nav-section {
-  color: #9a9a9b;
+  color: #494949;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--link-selected-color);
 }
 
 .link-selected {
-  color: black;
+  color: white;
+  background-color: #90a8f3;
+  border-radius: 5px;
 }
-
 .main-section {
   position: absolute;
   background: #e4e9f7;

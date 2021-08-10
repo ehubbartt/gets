@@ -6,8 +6,8 @@ import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import InfoIcon from "@material-ui/icons/Info";
 import { BiBook } from "react-icons/bi";
 import { MdDescription } from "react-icons/md";
-import { FaChalkboardTeacher, FaRegMoneyBillAlt } from "react-icons/fa";
-import { GiCpu } from "react-icons/gi";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { GiCpu, GiReceiveMoney } from "react-icons/gi";
 
 export const jobsData = [];
 export const job = {};
@@ -67,7 +67,7 @@ export const navData = [
         page: <HomePage title="Profits" />,
         url: "/profits",
         text: "Profits",
-        icon: <FaRegMoneyBillAlt style={iconStyles.navIcon} />,
+        icon: <GiReceiveMoney style={iconStyles.navIcon} />,
         exact: false,
       },
     ],
