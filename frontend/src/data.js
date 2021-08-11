@@ -2,6 +2,7 @@ import { AiOutlineHome, AiOutlineSafety } from "react-icons/ai";
 import { CgWorkAlt, CgTemplate } from "react-icons/cg";
 import JobPage from "./Pages/JobPage";
 import HomePage from "./Pages/HomePage";
+import PayPage from "./Pages/PayPage";
 import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import InfoIcon from "@material-ui/icons/Info";
 import { BiBook } from "react-icons/bi";
@@ -54,7 +55,7 @@ export const navData = [
       },
       {
         id: 13,
-        page: <HomePage title="Employee Pay" />,
+        page: <PayPage title="Employee Pay" />,
         url: "/pay",
         text: "Pay",
         icon: <AccountBalanceWalletIcon style={iconStyles.navIcon} />,

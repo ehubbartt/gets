@@ -1,0 +1,21 @@
+#pay-grid {
+  padding: 50px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-auto-rows: minmax(200px, auto);
+  gap: 10px;
+}
+
+#pay-grid > div {
+  background-color: whitesmoke;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-box {
+  grid-column: 1/3;
+  grid-row: 1/3;
+}
