@@ -7,7 +7,12 @@ import InfoIcon from "@material-ui/icons/Info";
 import { BiBook } from "react-icons/bi";
 import { MdDescription } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
-import { GiCpu, GiReceiveMoney, GiTestTubes, GiMicroscope } from "react-icons/gi";
+import {
+  GiCpu,
+  GiReceiveMoney,
+  GiTestTubes,
+  GiMicroscope,
+} from "react-icons/gi";
 import { FcTemplate } from "react-icons/fc";
 
 export const jobsData = [];
@@ -147,42 +152,49 @@ export const navData = [
       {
         id: 52,
         page: <HomePage title="List Test Report" />,
-        url: "/manage-template", 
-        text: "Manage Template", 
-        icon: <FcTemplate  style={iconStyles.navicon} />,
-        exact: false, 
+        url: "/manage-template",
+        text: "Manage Template",
+        icon: <FcTemplate style={iconStyles.navicon} />,
+        exact: false,
       },
       {
         id: 53,
         page: <HomePage title="List Test Report" />,
-        url: "/Add-template", 
-        text: "Add Template", 
-        icon: <FcTemplate  style={iconStyles.navicon} />,
-        exact: false, 
+        url: "/Add-template",
+        text: "Add Template",
+        icon: <FcTemplate style={iconStyles.navicon} />,
+        exact: false,
       },
       {
         id: 54,
         page: <HomePage title="List Test Report" />,
-        url: "/cost-template", 
-        text: "Template Cost", 
-        icon: <FcTemplate  style={iconStyles.navicon} />,
-        exact: false, 
+        url: "/cost-template",
+        text: "Template Cost",
+        icon: <FcTemplate style={iconStyles.navicon} />,
+        exact: false,
       },
     ],
   },
   {
-    sectionid: 6, 
-    section: "Equipment", 
+    sectionid: 6,
+    section: "Equipment",
     links: [
       {
         id: 61,
         page: <HomePage title="List of Equipments" />,
-        url: "/list-equipement", 
-        text: "List-Equipment", 
-        icon: <GiMicroscope  style={iconStyles.navicon} />,
+        url: "/list-equipement",
+        text: "List-Equipment",
+        icon: <GiMicroscope style={iconStyles.navicon} />,
         exact: false,
       },
-
     ],
   },
+];
+
+export const inputData = [
+  { name: "Priority", type: "number", ph: 1 },
+  { name: "Name", type: "string", ph: "Name" },
+  { name: "dc", type: "string", ph: "Date Code" },
+  { name: "pn", type: "string", ph: "Part Number" },
+  { name: "so", type: "string", ph: "Sales Order" },
 ];

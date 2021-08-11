@@ -3,6 +3,8 @@ import { postParsedText } from "../services/get-text";
 import { useGlobalContext } from "../context";
 import { createOrder } from "../services/orders.db";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { inputData } from "../data";
+import { getDate } from "../functions/getDate";
 
 /**
  * @returns job inputs to be placed inside the modal
@@ -25,12 +27,7 @@ const JobInputs = () => {
   const [isOrdersLoading, setIsOrdersLoading] = useState(false);
 
   useEffect(() => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0");
-    let yyyy = today.getFullYear();
-
-    today = mm + "/" + dd + "/" + yyyy;
+    const today = getDate();
     setDate(today);
     setOrder({ ...order, date: today });
     // eslint-disable-next-line
@@ -50,7 +47,7 @@ const JobInputs = () => {
     postData();
   };
 
-  const handleSubmitJob = async () => {
+  const handleSubmitJob = () => {
     closeJobInputModal();
     setIsJobInputModalOpen(false);
     setOrder({ date: date });
@@ -144,13 +141,9 @@ const Title = () => {
   );
 };
 
-const Inputs = ({
-  order,
-  setOrder,
-  setAreInputsOkay,
-  areInputsOkay,
-  setIsOrdersLoading,
-}) => {
+const Inputs = (props) => {
+  const { setIsOrdersLoading } = props;
+
   return (
     <form
       onSubmit={(e) => {
@@ -159,99 +152,53 @@ const Inputs = ({
       }}
     >
       <div id="input-container">
-        <div className="form-group">
-          <span>Priority</span>
-          <input
-            className={
-              areInputsOkay.priority ? "form-field" : "form-field form-error"
-            }
-            id="priority-input"
-            placeholder="1"
-            type="number"
-            onChange={(e) => {
-              setOrder({ ...order, priority: e.target.value });
-              if (!areInputsOkay.priority) {
-                setAreInputsOkay({ ...areInputsOkay, priority: true });
-              }
-            }}
-          />
-        </div>
-        <div className="form-group">
-          <span>Name</span>
-          <input
-            className={
-              areInputsOkay.name ? "form-field" : "form-field form-error"
-            }
-            id="name-input"
-            type="text"
-            placeholder="default name"
-            onChange={(e) => {
-              setOrder({ ...order, name: e.target.value });
-              if (!areInputsOkay.name) {
-                setAreInputsOkay({ ...areInputsOkay, name: true });
-              }
-            }}
-          />
-        </div>
-        <div className="form-group">
-          <span>DC</span>
-          <input
-            className={
-              areInputsOkay.dc ? "form-field" : "form-field form-error"
-            }
-            id="dc-input"
-            type="text"
-            value={order.dc || ""}
-            placeholder="Date Code"
-            onChange={(e) => {
-              setOrder({ ...order, dc: e.target.value });
-              if (!areInputsOkay.dc) {
-                setAreInputsOkay({ ...areInputsOkay, dc: true });
-              }
-            }}
-          />
-        </div>
-        <div className="form-group">
-          <span>PN</span>
-          <input
-            className={
-              areInputsOkay.pn ? "form-field" : "form-field form-error"
-            }
-            id="pn-input"
-            type="text"
-            value={order.pn || ""}
-            placeholder="Part Number"
-            onChange={(e) => {
-              setOrder({ ...order, pn: e.target.value });
-              if (!areInputsOkay.pn) {
-                setAreInputsOkay({ ...areInputsOkay, pn: true });
-              }
-            }}
-          />
-        </div>
-        <div className="form-group">
-          <span>SO</span>
-          <input
-            className={
-              areInputsOkay.so ? "form-field" : "form-field form-error"
-            }
-            id="so-input"
-            type="text"
-            value={order.so || ""}
-            placeholder="Sales Order"
-            onChange={(e) => {
-              setOrder({ ...order, so: e.target.value });
-              if (!areInputsOkay.so) {
-                setAreInputsOkay({ ...areInputsOkay, so: true });
-              }
-            }}
-          />
-        </div>
+        {inputData.map((data, idx) => {
+          return (
+            <Input
+              key={idx}
+              {...props}
+              name={data.name}
+              type={data.type}
+              ph={data.ph}
+            ></Input>
+          );
+        })}
       </div>
       <button className="btn submit-btn" type="submit">
         SUBMIT
       </button>
     </form>
+  );
+};
+
+const Input = ({
+  name,
+  type,
+  areInputsOkay,
+  setAreInputsOkay,
+  order,
+  setOrder,
+  ph,
+}) => {
+  const lowerName = name.toLowerCase();
+  return (
+    <div className="form-group">
+      <span>{name}</span>
+      <input
+        className={
+          areInputsOkay[`${lowerName}`] ? "form-field" : "form-field form-error"
+        }
+        id={`${lowerName}-input`}
+        placeholder={ph}
+        type={type}
+        onChange={(e) => {
+          setOrder({ ...order, [`${lowerName}`]: e.target.value });
+          if (!areInputsOkay[`${lowerName}`]) {
+            setAreInputsOkay({ ...areInputsOkay, [`${lowerName}`]: true });
+          }
+        }}
+      />
+    </div>
   );
 };
 
