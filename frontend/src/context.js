@@ -16,6 +16,13 @@ const AppProvider = ({ children }) => {
     so: null,
     date: null,
   });
+  const [areInputsOkay, setAreInputsOkay] = useState({
+    priority: true,
+    name: true,
+    dc: true,
+    pn: true,
+    so: true,
+  });
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -55,6 +62,8 @@ const AppProvider = ({ children }) => {
         setOrder,
         isNavActive,
         setIsNavActive,
+        areInputsOkay,
+        setAreInputsOkay,
       }}
     >
       {children}

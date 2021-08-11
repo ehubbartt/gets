@@ -15,6 +15,8 @@ const JobInputs = () => {
     closeJobInputModal,
     order,
     setOrder,
+    areInputsOkay,
+    setAreInputsOkay,
   } = useGlobalContext();
 
   const [date, setDate] = useState("01/01/2021");
@@ -31,6 +33,7 @@ const JobInputs = () => {
     today = mm + "/" + dd + "/" + yyyy;
     setDate(today);
     setOrder({ ...order, date: today });
+    // eslint-disable-next-line
   }, []);
 
   const postData = async () => {
@@ -47,31 +50,70 @@ const JobInputs = () => {
     postData();
   };
 
+  const handleSubmitJob = async () => {
+    closeJobInputModal();
+    setIsJobInputModalOpen(false);
+    setOrder({ date: date });
+    setURL("");
+  };
+
+  const checkIfAllOkay = (curAreInputsOkay) => {
+    return (
+      curAreInputsOkay.priority &&
+      curAreInputsOkay.name &&
+      curAreInputsOkay.dc &&
+      curAreInputsOkay.pn &&
+      curAreInputsOkay.so
+    );
+  };
+
+  const checkSubmitJob = () => {
+    const curAreInputsOkay = areInputsOkay;
+    if (!order.priority) {
+      curAreInputsOkay.priority = false;
+    }
+    if (!order.name) {
+      curAreInputsOkay.name = false;
+    }
+    if (!order.dc) {
+      curAreInputsOkay.dc = false;
+    }
+    if (!order.pn) {
+      curAreInputsOkay.pn = false;
+    }
+    if (!order.so) {
+      curAreInputsOkay.so = false;
+    }
+    setAreInputsOkay(curAreInputsOkay);
+    console.log(curAreInputsOkay);
+    return checkIfAllOkay(curAreInputsOkay);
+  };
+
   //FIXME: there is a memory leak here if you refresh the page too fast
   useEffect(() => {
     const abortController = new AbortController();
-    const handleSubmitJob = async () => {
-      closeJobInputModal();
-      setIsJobInputModalOpen(false);
-      setOrder({ date: date });
-      setURL("");
-    };
     if (isOrdersLoading) {
-      const fetchData = async () => {
-        try {
-          console.log(order);
-          const curOrder = await createOrder(order);
-          setJobs([...jobs, curOrder]);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchData();
-      handleSubmitJob();
+      const isSubmitOkay = checkSubmitJob();
+      console.log(isSubmitOkay);
+      if (isSubmitOkay) {
+        const fetchData = async () => {
+          try {
+            console.log(order);
+            const curOrder = await createOrder(order);
+            setJobs([...jobs, curOrder]);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        fetchData();
+        handleSubmitJob();
+      }
     }
+    setIsOrdersLoading(false);
     return () => {
       abortController.abort();
     };
+    // eslint-disable-next-line
   }, [isOrdersLoading]);
 
   return (
@@ -83,15 +125,13 @@ const JobInputs = () => {
         URL={URL}
         isImageLoading={isImageLoading}
       />
-      <Inputs order={order} setOrder={setOrder} />
-      <button
-        className="btn submit-btn"
-        onClick={() => {
-          setIsOrdersLoading(true);
-        }}
-      >
-        SUBMIT
-      </button>
+      <Inputs
+        order={order}
+        setOrder={setOrder}
+        setAreInputsOkay={setAreInputsOkay}
+        areInputsOkay={areInputsOkay}
+        setIsOrdersLoading={setIsOrdersLoading}
+      />
     </>
   );
 };
@@ -104,73 +144,113 @@ const Title = () => {
   );
 };
 
-const Inputs = ({ order, setOrder }) => {
+const Inputs = ({
+  order,
+  setOrder,
+  setAreInputsOkay,
+  areInputsOkay,
+  setIsOrdersLoading,
+}) => {
   return (
-    <form id="input-container" onSubmit={() => console.log("here")}>
-      <div className="form-group">
-        <span>Priority</span>
-        <input
-          className="form-field"
-          id="priority-input"
-          placeholder="1"
-          type="text"
-          required
-          onChange={(e) => {
-            setOrder({ ...order, priority: e.target.value });
-          }}
-        />
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setIsOrdersLoading(true);
+      }}
+    >
+      <div id="input-container">
+        <div className="form-group">
+          <span>Priority</span>
+          <input
+            className={
+              areInputsOkay.priority ? "form-field" : "form-field form-error"
+            }
+            id="priority-input"
+            placeholder="1"
+            type="number"
+            onChange={(e) => {
+              setOrder({ ...order, priority: e.target.value });
+              if (!areInputsOkay.priority) {
+                setAreInputsOkay({ ...areInputsOkay, priority: true });
+              }
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <span>Name</span>
+          <input
+            className={
+              areInputsOkay.name ? "form-field" : "form-field form-error"
+            }
+            id="name-input"
+            type="text"
+            placeholder="default name"
+            onChange={(e) => {
+              setOrder({ ...order, name: e.target.value });
+              if (!areInputsOkay.name) {
+                setAreInputsOkay({ ...areInputsOkay, name: true });
+              }
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <span>DC</span>
+          <input
+            className={
+              areInputsOkay.dc ? "form-field" : "form-field form-error"
+            }
+            id="dc-input"
+            type="text"
+            value={order.dc || ""}
+            placeholder="Date Code"
+            onChange={(e) => {
+              setOrder({ ...order, dc: e.target.value });
+              if (!areInputsOkay.dc) {
+                setAreInputsOkay({ ...areInputsOkay, dc: true });
+              }
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <span>PN</span>
+          <input
+            className={
+              areInputsOkay.pn ? "form-field" : "form-field form-error"
+            }
+            id="pn-input"
+            type="text"
+            value={order.pn || ""}
+            placeholder="Part Number"
+            onChange={(e) => {
+              setOrder({ ...order, pn: e.target.value });
+              if (!areInputsOkay.pn) {
+                setAreInputsOkay({ ...areInputsOkay, pn: true });
+              }
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <span>SO</span>
+          <input
+            className={
+              areInputsOkay.so ? "form-field" : "form-field form-error"
+            }
+            id="so-input"
+            type="text"
+            value={order.so || ""}
+            placeholder="Sales Order"
+            onChange={(e) => {
+              setOrder({ ...order, so: e.target.value });
+              if (!areInputsOkay.so) {
+                setAreInputsOkay({ ...areInputsOkay, so: true });
+              }
+            }}
+          />
+        </div>
       </div>
-      <div className="form-group">
-        <span>Name</span>
-        <input
-          className="form-field"
-          id="name-input"
-          type="text"
-          placeholder="default name"
-          onChange={(e) => {
-            setOrder({ ...order, name: e.target.value });
-          }}
-        />
-      </div>
-      <div className="form-group">
-        <span>DC</span>
-        <input
-          className="form-field"
-          id="dc-input"
-          type="text"
-          value={order.dc || ""}
-          placeholder="Date Code"
-          onChange={(e) => {
-            setOrder({ ...order, dc: e.target.value });
-          }}
-        />
-      </div>
-      <div className="form-group">
-        <span>PN</span>
-        <input
-          className="form-field"
-          id="pn-input"
-          type="text"
-          value={order.pn || ""}
-          placeholder="Part Number"
-          onChange={(e) => {
-            setOrder({ ...order, pn: e.target.value });
-          }}
-        />
-      </div>
-      <div className="form-group">
-        <span>SO</span>
-        <input
-          className="form-field"
-          id="so-input"
-          type="text"
-          value={order.so || ""}
-          placeholder="Sales Order"
-          onChange={(e) => {
-            setOrder({ ...order, so: e.target.value });
-          }}
-        />
-      </div>
+      <button className="btn submit-btn" type="submit">
+        SUBMIT
+      </button>
     </form>
   );
 };

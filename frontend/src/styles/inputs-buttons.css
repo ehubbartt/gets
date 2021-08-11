@@ -25,7 +25,6 @@ input {
   font-size: 14px;
   font-weight: 500;
   font-family: inherit;
-  border-radius: 6px;
   -webkit-appearance: none;
   color: var(--input-color);
   border: 1px solid var(--input-border);
@@ -44,6 +43,10 @@ input {
 .form-field:focus {
   outline: none;
   border-color: var(--input-border-focus);
+}
+
+.form-error {
+  border: 1px solid red;
 }
 
 .form-group {
@@ -101,6 +104,8 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .form-group:focus-within > span {

@@ -1,7 +1,3 @@
-:root {
-  --grid-template-jobs: 1fr 1fr 1fr 1fr 1fr 1fr;
-}
-
 #joblist-container {
   margin: auto;
   margin-top: 10px;
