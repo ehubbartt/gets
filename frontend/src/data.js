@@ -1,5 +1,5 @@
 import { AiOutlineHome, AiOutlineSafety } from "react-icons/ai";
-import { CgWorkAlt } from "react-icons/cg";
+import { CgWorkAlt, CgTemplate } from "react-icons/cg";
 import JobPage from "./Pages/JobPage";
 import HomePage from "./Pages/HomePage";
 import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
@@ -13,7 +13,6 @@ import {
   GiTestTubes,
   GiMicroscope,
 } from "react-icons/gi";
-import { FcTemplate } from "react-icons/fc";
 
 export const jobsData = [];
 export const job = {};
@@ -139,7 +138,7 @@ export const navData = [
   },
   {
     sectionid: 5,
-    section: "Tests",
+    section: "TESTS",
     links: [
       {
         id: 51,
@@ -154,7 +153,7 @@ export const navData = [
         page: <HomePage title="List Test Report" />,
         url: "/manage-template",
         text: "Manage Template",
-        icon: <FcTemplate style={iconStyles.navicon} />,
+        icon: <CgTemplate style={iconStyles.navIcon} />,
         exact: false,
       },
       {
@@ -162,7 +161,7 @@ export const navData = [
         page: <HomePage title="List Test Report" />,
         url: "/Add-template",
         text: "Add Template",
-        icon: <FcTemplate style={iconStyles.navicon} />,
+        icon: <CgTemplate style={iconStyles.navIcon} />,
         exact: false,
       },
       {
@@ -170,21 +169,21 @@ export const navData = [
         page: <HomePage title="List Test Report" />,
         url: "/cost-template",
         text: "Template Cost",
-        icon: <FcTemplate style={iconStyles.navicon} />,
+        icon: <CgTemplate style={iconStyles.navIcon} />,
         exact: false,
       },
     ],
   },
   {
     sectionid: 6,
-    section: "Equipment",
+    section: "EQUIPMENT",
     links: [
       {
         id: 61,
         page: <HomePage title="List of Equipments" />,
-        url: "/list-equipement",
+        url: "/list-equipment",
         text: "List-Equipment",
-        icon: <GiMicroscope style={iconStyles.navicon} />,
+        icon: <GiMicroscope style={iconStyles.navIcon} />,
         exact: false,
       },
     ],
