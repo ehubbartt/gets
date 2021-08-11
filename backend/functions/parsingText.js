@@ -95,7 +95,7 @@ export const createParsedText = (allText) => {
     if (code) {
       let nextWord = allText[i + 1];
       nextWord = nextWord.replace(" ", "");
-      if (code === "dateCode") {
+      if (code === "dc") {
         nextWord = nextWord.substring(0, 4);
       }
       parsedText[`${code}`] = nextWord; //adds to the object based on the code value from the key
