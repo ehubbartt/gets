@@ -40,7 +40,6 @@ const JobInputs = () => {
     });
     setIsImageLoading(false);
     setOrder({ ...order, ...data });
-    console.log(order);
   };
 
   const handleSubmitURL = () => {
@@ -56,33 +55,36 @@ const JobInputs = () => {
 
   const checkIfAllOkay = (curAreInputsOkay) => {
     return (
-      curAreInputsOkay.priority &&
-      curAreInputsOkay.name &&
-      curAreInputsOkay.dc &&
+      curAreInputsOkay.so &&
       curAreInputsOkay.pn &&
-      curAreInputsOkay.so
+      curAreInputsOkay.bin &&
+      curAreInputsOkay.dc &&
+      curAreInputsOkay.due &&
+      curAreInputsOkay.customer
     );
   };
 
   const checkSubmitJob = () => {
     const curAreInputsOkay = areInputsOkay;
-    if (!order.priority) {
-      curAreInputsOkay.priority = false;
-    }
-    if (!order.name) {
-      curAreInputsOkay.name = false;
-    }
-    if (!order.dc) {
-      curAreInputsOkay.dc = false;
+    if (!order.so) {
+      curAreInputsOkay.so = false;
     }
     if (!order.pn) {
       curAreInputsOkay.pn = false;
     }
-    if (!order.so) {
-      curAreInputsOkay.so = false;
+    if (!order.bin) {
+      curAreInputsOkay.bin = false;
+    }
+    if (!order.dc) {
+      curAreInputsOkay.dc = false;
+    }
+    if (!order.due) {
+      curAreInputsOkay.due = false;
+    }
+    if (!order.customer) {
+      curAreInputsOkay.customer = false;
     }
     setAreInputsOkay(curAreInputsOkay);
-    console.log(curAreInputsOkay);
     return checkIfAllOkay(curAreInputsOkay);
   };
 
@@ -91,7 +93,6 @@ const JobInputs = () => {
     const abortController = new AbortController();
     if (isOrdersLoading) {
       const isSubmitOkay = checkSubmitJob();
-      console.log(isSubmitOkay);
       if (isSubmitOkay) {
         const fetchData = async () => {
           try {
@@ -190,6 +191,7 @@ const Input = ({
         }
         id={`${lowerName}-input`}
         placeholder={ph}
+        value={order[`${lowerName}`] || ""}
         type={type}
         onChange={(e) => {
           setOrder({ ...order, [`${lowerName}`]: e.target.value });

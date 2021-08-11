@@ -9,19 +9,22 @@ const AppProvider = ({ children }) => {
   const [jobs, setJobs] = useState(jobsData);
   const [isNavActive, setIsNavActive] = useState(true);
   const [order, setOrder] = useState({
-    priority: null,
-    name: null,
-    datecode: null,
-    pn: null,
     so: null,
-    date: null,
+    pn: null,
+    bin: null,
+    dc: null,
+    due: null,
+    customer: null,
+    note: null,
   });
   const [areInputsOkay, setAreInputsOkay] = useState({
-    priority: true,
-    name: true,
-    dc: true,
-    pn: true,
     so: true,
+    pn: true,
+    bin: true,
+    dc: true,
+    due: true,
+    customer: true,
+    note: true,
   });
 
   const openModal = () => {

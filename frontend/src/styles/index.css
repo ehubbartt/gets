@@ -43,7 +43,7 @@ code {
   --group-border-focus: var(--input-border-focus);
   --group-background-focus: #678efe;
   --link-selected-color: #678efe;
-  --grid-template-jobs: 1fr 1fr 1fr 1fr 1fr 1fr;
+  --grid-template-jobs: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .main-section {

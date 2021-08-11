@@ -196,9 +196,11 @@ export const navData = [
  * ph is the placeholder text for the input
  */
 export const inputData = [
-  { name: "Priority", type: "number", ph: 1 },
-  { name: "Name", type: "string", ph: "Name" },
-  { name: "dc", type: "string", ph: "Date Code" },
-  { name: "pn", type: "string", ph: "Part Number" },
-  { name: "so", type: "string", ph: "Sales Order" },
+  { name: "SO", type: "string", ph: "Sales Order" },
+  { name: "PN", type: "string", ph: "Part Number" },
+  { name: "Bin", type: "string", ph: "Bin" },
+  { name: "DC", type: "string", ph: "Date Code" },
+  { name: "DUE", type: "string", ph: "Due Date" },
+  { name: "Customer", type: "string", ph: "Customer Name" },
+  { name: "Note", type: "string", ph: "Note" },
 ];

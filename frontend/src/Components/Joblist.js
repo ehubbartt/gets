@@ -33,12 +33,13 @@ const Joblist = () => {
 const Title = () => {
   return (
     <div className="title">
-      <h3 className="priority">Priority</h3>
-      <h3 className="name spaced">Name</h3>
-      <h3 className="date-code spaced">Date Code</h3>
-      <h3 className="part-number spaced">Part Number</h3>
-      <h3 className="sales-order spaced">Sales Order</h3>
-      <h3 className="date">Date</h3>
+      <h3>SO</h3>
+      <h3>PN</h3>
+      <h3>Bin</h3>
+      <h3>DC</h3>
+      <h3>DUE</h3>
+      <h3>Customer</h3>
+      <h3>Note</h3>
     </div>
   );
 };
@@ -54,15 +55,16 @@ const Jobs = ({ jobs }) => {
 };
 
 const Job = ({ job }) => {
-  const { priority, name, dc, date, pn, so } = job;
+  const { so, pn, bin, dc, due, customer, note } = job;
   return (
     <div className="job-card">
-      <span className="priority">{priority}</span>
-      <span className="name spaced">{name}</span>
-      <span className="date-code spaced">{dc}</span>
-      <span className="part-number spaced">{pn}</span>
-      <span className="sales-order spaced">{so}</span>
-      <span className="date">{date}</span>
+      <span>{so}</span>
+      <span>{pn}</span>
+      <span>{bin}</span>
+      <span>{dc}</span>
+      <span>{due}</span>
+      <span>{customer}</span>
+      <span>{note}</span>
     </div>
   );
 };
