@@ -191,6 +191,11 @@ export const navData = [
   },
 ];
 
+/**
+ * name is the text before the input and the object name used for the
+ * type is the type for the input
+ * ph is the placeholder text for the input
+ */
 export const inputData = [
   { name: "Priority", type: "number", ph: 1 },
   { name: "Name", type: "string", ph: "Name" },
