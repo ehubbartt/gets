@@ -33,12 +33,12 @@ const Joblist = () => {
 const Title = () => {
   return (
     <div className="title">
-      <span className="priority">Priority</span>
-      <span className="name spaced">Name</span>
-      <span className="date-code spaced">Date Code</span>
-      <span className="part-number spaced">Part Number</span>
-      <span className="sales-order spaced">Sales Order</span>
-      <span className="date">Date</span>
+      <h3 className="priority">Priority</h3>
+      <h3 className="name spaced">Name</h3>
+      <h3 className="date-code spaced">Date Code</h3>
+      <h3 className="part-number spaced">Part Number</h3>
+      <h3 className="sales-order spaced">Sales Order</h3>
+      <h3 className="date">Date</h3>
     </div>
   );
 };
