@@ -30,7 +30,7 @@ const JobInputs = () => {
 
     today = mm + "/" + dd + "/" + yyyy;
     setDate(today);
-    setOrder({ ...order, date: date });
+    setOrder({ ...order, date: today });
   }, []);
 
   const postData = async () => {
@@ -53,12 +53,13 @@ const JobInputs = () => {
     const handleSubmitJob = async () => {
       closeJobInputModal();
       setIsJobInputModalOpen(false);
-      setURL("");
       setOrder({ date: date });
+      setURL("");
     };
     if (isOrdersLoading) {
       const fetchData = async () => {
         try {
+          console.log(order);
           const curOrder = await createOrder(order);
           setJobs([...jobs, curOrder]);
         } catch (err) {
@@ -105,7 +106,7 @@ const Title = () => {
 
 const Inputs = ({ order, setOrder }) => {
   return (
-    <div id="input-container">
+    <form id="input-container" onSubmit={() => console.log("here")}>
       <div className="form-group">
         <span>Priority</span>
         <input
@@ -113,6 +114,7 @@ const Inputs = ({ order, setOrder }) => {
           id="priority-input"
           placeholder="1"
           type="text"
+          required
           onChange={(e) => {
             setOrder({ ...order, priority: e.target.value });
           }}
@@ -169,7 +171,7 @@ const Inputs = ({ order, setOrder }) => {
           }}
         />
       </div>
-    </div>
+    </form>
   );
 };
 
