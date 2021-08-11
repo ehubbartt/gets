@@ -1,3 +1,7 @@
+:root {
+  --grid-template-jobs: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
 #joblist-container {
   margin: auto;
   margin-top: 10px;
@@ -21,7 +25,7 @@
 
 .title {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: var(--grid-template-jobs);
   border-bottom: 1px solid #dbdbf3;
   padding: 10px;
   width: calc(99% - 10px);
@@ -29,7 +33,7 @@
 
 .job-card {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: var(--grid-template-jobs);
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin-top: 10px;
   height: 75px;
