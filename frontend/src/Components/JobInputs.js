@@ -5,6 +5,7 @@ import { createOrder } from "../services/orders.db";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { inputData } from "../data";
 import { getDate } from "../functions/getDate";
+import CameraContainer from "./CameraContainer";
 
 /**
  * @returns job inputs to be placed inside the modal
@@ -96,12 +97,9 @@ const JobInputs = () => {
       if (isSubmitOkay) {
         const fetchData = async () => {
           try {
-            console.log(order);
             const curOrder = await createOrder(order);
             setJobs([...jobs, curOrder]);
-          } catch (err) {
-            console.log(err);
-          }
+          } catch (err) {}
         };
         fetchData();
         handleSubmitJob();
@@ -117,19 +115,16 @@ const JobInputs = () => {
   return (
     <>
       <Title />
-      <URLInput
-        setURL={setURL}
-        handleSubmitURL={handleSubmitURL}
-        URL={URL}
-        isImageLoading={isImageLoading}
-      />
-      <Inputs
-        order={order}
-        setOrder={setOrder}
-        setAreInputsOkay={setAreInputsOkay}
-        areInputsOkay={areInputsOkay}
-        setIsOrdersLoading={setIsOrdersLoading}
-      />
+      <div id="main-job-input-container">
+        <CameraContainer />
+        <Inputs
+          order={order}
+          setOrder={setOrder}
+          setAreInputsOkay={setAreInputsOkay}
+          areInputsOkay={areInputsOkay}
+          setIsOrdersLoading={setIsOrdersLoading}
+        />
+      </div>
     </>
   );
 };
@@ -147,24 +142,23 @@ const Inputs = (props) => {
 
   return (
     <form
+      id="job-input-container"
       onSubmit={(e) => {
         e.preventDefault();
         setIsOrdersLoading(true);
       }}
     >
-      <div id="input-container">
-        {inputData.map((data, idx) => {
-          return (
-            <Input
-              key={idx}
-              {...props}
-              name={data.name}
-              type={data.type}
-              ph={data.ph}
-            ></Input>
-          );
-        })}
-      </div>
+      {inputData.map((data, idx) => {
+        return (
+          <Input
+            key={idx}
+            {...props}
+            name={data.name}
+            type={data.type}
+            ph={data.ph}
+          ></Input>
+        );
+      })}
       <button className="btn submit-btn" type="submit">
         SUBMIT
       </button>
@@ -205,6 +199,13 @@ const Input = ({
 };
 
 const URLInput = ({ setURL, handleSubmitURL, URL, isImageLoading }) => {
+  /* <URLInput
+        setURL={setURL}
+        handleSubmitURL={handleSubmitURL}
+        URL={URL}
+        isImageLoading={isImageLoading}
+      /> */
+
   return (
     <div id="url-input">
       <div className="form-group" id="user-url-input">

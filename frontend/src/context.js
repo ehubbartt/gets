@@ -8,6 +8,9 @@ const AppProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [jobs, setJobs] = useState(jobsData);
   const [isNavActive, setIsNavActive] = useState(true);
+  const [isWebcamOpen, setIsWebcamOpen] = useState(false);
+  const [imgSRC, setImgSRC] = useState("");
+  const [showScreenshot, setShowScreenshot] = useState(false);
   const [order, setOrder] = useState({
     so: null,
     pn: null,
@@ -67,6 +70,12 @@ const AppProvider = ({ children }) => {
         setIsNavActive,
         areInputsOkay,
         setAreInputsOkay,
+        isWebcamOpen,
+        setIsWebcamOpen,
+        showScreenshot,
+        setShowScreenshot,
+        imgSRC,
+        setImgSRC,
       }}
     >
       {children}
