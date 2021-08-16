@@ -35,49 +35,62 @@ const CameraContainer = () => {
 
   return (
     <div id="camera-container">
-      {!showScreenshot && (
-        <FormControlLabel
-          control={
-            <Switch
-              name="camera"
-              color="primary"
-              checked={isWebcamOpen}
-              onChange={() => {
-                setIsWebcamOpen(!isWebcamOpen);
-              }}
-            />
-          }
-          label={isWebcamOpen ? "Camera On" : "Camera Off"}
-        />
-      )}
+      {
+        //render camera switch if screenshot is not active
+        !showScreenshot && (
+          <FormControlLabel
+            control={
+              <Switch
+                name="camera"
+                color="primary"
+                checked={isWebcamOpen}
+                onChange={() => {
+                  setIsWebcamOpen(!isWebcamOpen);
+                }}
+              />
+            }
+            label={isWebcamOpen ? "Camera On" : "Camera Off"}
+          />
+        )
+      }
       <div className="camera-outline">
-        {!showScreenshot ? (
-          isWebcamOpen && (
-            <Webcam
-              audio={false}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-              videoConstraints={videoConstraints}
-            ></Webcam>
+        {
+          //if screnshot is not active render webcam else render screenshot
+          !showScreenshot ? (
+            isWebcamOpen && (
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                videoConstraints={videoConstraints}
+              ></Webcam>
+            )
+          ) : (
+            <img src={imgSRC} alt="screenshot" />
           )
-        ) : (
-          <img src={imgSRC} alt="screenshot" />
-        )}
+        }
       </div>
       <div className="camera-buttons">
-        {isWebcamOpen && (
-          <div className="btn" onClick={capture}>
-            Snap
-          </div>
-        )}
-        {showScreenshot && (
-          <>
-            <div className="btn" onClick={back}>
-              Back
+        {
+          //if webcam is active, show snap button
+          isWebcamOpen && (
+            <div className="btn" onClick={capture}>
+              Snap
             </div>
-            {/* <div className="btn">Submit Image</div> */}
-          </>
-        )}
+          )
+        }
+
+        {
+          //if screenshot is active, show back and submit button
+          showScreenshot && (
+            <>
+              <div className="btn" onClick={back}>
+                Back
+              </div>
+              {/* <div className="btn">Submit Image</div> */}
+            </>
+          )
+        }
       </div>
     </div>
   );
