@@ -2,7 +2,7 @@
   cursor: pointer;
   background: var(--group-background-focus);
   border-color: transparent;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   padding: 0.5rem;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -14,7 +14,7 @@
   height: 50px;
   margin: 10px;
   align-self: center;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 

@@ -57,7 +57,7 @@ li > a > svg {
 .link-selected {
   color: white;
   background-color: #90a8f3;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
 }
 .menu-in {
   position: absolute;
