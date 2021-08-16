@@ -41,6 +41,7 @@ const CameraContainer = () => {
             <Switch
               name="camera"
               color="primary"
+              checked={isWebcamOpen}
               onChange={() => {
                 setIsWebcamOpen(!isWebcamOpen);
               }}
