@@ -5,7 +5,7 @@ import { createOrder } from "../services/orders.db";
 
 import { inputData } from "../data";
 import { getDate } from "../functions/getDate";
-import CameraContainer from "./CameraContainer";
+import OrderImage from "./OrderImage";
 
 /**
  * @returns job inputs to be placed inside the modal
@@ -99,7 +99,7 @@ const JobInputs = () => {
   return (
     <>
       <div id="main-job-input-container">
-        <CameraContainer />
+        <OrderImage />
         <Inputs
           order={order}
           setOrder={setOrder}
