@@ -69,7 +69,7 @@
   min-width: 50%;
   max-width: 90%;
   aspect-ratio: 16/9;
-  outline: 4px dashed var(--group-background-focus);
+  outline: 5px dashed var(--group-background-focus);
   margin: 1rem;
 }
 
