@@ -5,12 +5,15 @@ const getsTestUrl = "https://i.imgur.com/cAke54O.jpg";
 import express from "express";
 const app = express();
 import mongoose from "mongoose";
-import mongodb from "mongodb";
 import { OrderModel } from "./models/job-list-model.js";
 import { splitOnColon, createParsedText } from "./functions/parsingText.js";
+import { toArrayBuffer } from "./functions/array-buffer.js";
 
 import { ComputerVisionClient } from "@azure/cognitiveservices-computervision";
 import { ApiKeyCredentials } from "@azure/ms-rest-js";
+
+import multer from "multer";
+var upload = multer();
 
 /**
  * personal auth tokens
@@ -34,7 +37,10 @@ const STATUS_FAILED = "failed";
 
 app.use(express.json({ limit: "50mb" }));
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
+app.use("/files", express.static("files"));
+
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -48,13 +54,13 @@ app.use((req, res, next) => {
 });
 
 /**
- * returns all the lines from the API request
- * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
+ * returns all the lines from the API request from an image
+ * BODY: form data of a file/blob
  */
-app.post("/lines", async (req, res) => {
-  const URL = req.body.url;
-  let result = await computerVisionClient.read(URL);
+app.post("api/image/lines", upload.single("blob"), async (req, res) => {
+  const arrayBuffer = toArrayBuffer(req.file.buffer);
 
+  let result = await computerVisionClient.readInStream(arrayBuffer);
   let operation = result.operationLocation.split("/").slice(-1)[0];
 
   while (result.status !== STATUS_SUCCEEDED) {
@@ -63,7 +69,58 @@ app.post("/lines", async (req, res) => {
   const data = result.analyzeResult.readResults;
 
   const lines = data[0].lines;
+  console.log(lines);
   res.send(lines);
+});
+
+/**
+ * returns all the lines from the API request
+ * BODY: form data of a file/blob
+ */
+app.post("api/image/parsed-text", upload.single("blob"), async (req, res) => {
+  const arrayBuffer = toArrayBuffer(req.file.buffer);
+
+  let result = await computerVisionClient.readInStream(arrayBuffer);
+  let operation = result.operationLocation.split("/").slice(-1)[0];
+
+  while (result.status !== STATUS_SUCCEEDED) {
+    result = await computerVisionClient.getReadResult(operation);
+  }
+  const data = result.analyzeResult.readResults;
+
+  for (const page in data) {
+    if (data.length > 1) {
+      // console.log(`==== Page: ${page}`); need to implement multiple page support
+    }
+    const lines = data[page].lines;
+    allText = splitOnColon(lines);
+  }
+  const parsedText = createParsedText(allText);
+  res.send(parsedText);
+});
+
+/**
+ * returns all the lines from the API request
+ * BODY: form data of a file/blob
+ */
+app.post("api/image/text", upload.single("blob"), async (req, res) => {
+  const arrayBuffer = toArrayBuffer(req.file.buffer);
+
+  let result = await computerVisionClient.readInStream(arrayBuffer);
+  let operation = result.operationLocation.split("/").slice(-1)[0];
+
+  while (result.status !== STATUS_SUCCEEDED) {
+    result = await computerVisionClient.getReadResult(operation);
+  }
+  const data = result.analyzeResult.readResults;
+
+  for (const page in data) {
+    if (data.length > 1) {
+    }
+    const lines = data[page].lines;
+    const allText = splitOnColon(lines);
+  }
+  res.send(allText);
 });
 
 /**
@@ -71,7 +128,7 @@ app.post("/lines", async (req, res) => {
  * returns all the text from the image in an array
  * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
  */
-app.post("/text", async (req, res) => {
+app.post("/api/url/text", async (req, res) => {
   const URL = req.body.url;
   let result = await computerVisionClient.read(URL);
 
@@ -88,8 +145,8 @@ app.post("/text", async (req, res) => {
     }
     const lines = data[page].lines;
     const allText = splitOnColon(lines);
-    res.send(allText);
   }
+  res.send(allText);
 });
 
 /**
@@ -100,7 +157,7 @@ app.post("/text", async (req, res) => {
  *
  * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
  */
-app.post("/text/parsed", async (req, res) => {
+app.post("/api/url/parsed-text", async (req, res) => {
   let allText = [];
 
   const URL = req.body.url;
