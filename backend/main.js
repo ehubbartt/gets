@@ -77,7 +77,7 @@ app.post("api/image/lines", upload.single("blob"), async (req, res) => {
  * returns all the lines from the API request
  * BODY: form data of a file/blob
  */
-app.post("api/image/parsed-text", upload.single("blob"), async (req, res) => {
+app.post("/api/image/parsed-text", upload.single("blob"), async (req, res) => {
   const arrayBuffer = toArrayBuffer(req.file.buffer);
 
   let result = await computerVisionClient.readInStream(arrayBuffer);
@@ -103,7 +103,7 @@ app.post("api/image/parsed-text", upload.single("blob"), async (req, res) => {
  * returns all the lines from the API request
  * BODY: form data of a file/blob
  */
-app.post("api/image/text", upload.single("blob"), async (req, res) => {
+app.post("/api/image/text", upload.single("blob"), async (req, res) => {
   const arrayBuffer = toArrayBuffer(req.file.buffer);
 
   let result = await computerVisionClient.readInStream(arrayBuffer);
@@ -119,8 +119,8 @@ app.post("api/image/text", upload.single("blob"), async (req, res) => {
     }
     const lines = data[page].lines;
     const allText = splitOnColon(lines);
+    res.send(allText);
   }
-  res.send(allText);
 });
 
 /**

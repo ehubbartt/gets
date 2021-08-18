@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { postParsedText } from "../services/get-text";
+
 import { useGlobalContext } from "../context";
 import { createOrder } from "../services/orders.db";
-import CircularProgress from "@material-ui/core/CircularProgress";
+
 import { inputData } from "../data";
 import { getDate } from "../functions/getDate";
 import CameraContainer from "./CameraContainer";
@@ -23,8 +23,6 @@ const JobInputs = () => {
   } = useGlobalContext();
 
   const [date, setDate] = useState("01/01/2021");
-  const [URL, setURL] = useState("");
-  const [isImageLoading, setIsImageLoading] = useState(false);
   const [isOrdersLoading, setIsOrdersLoading] = useState(false);
 
   useEffect(() => {
@@ -34,24 +32,10 @@ const JobInputs = () => {
     // eslint-disable-next-line
   }, []);
 
-  const postData = async () => {
-    setIsImageLoading(true);
-    const data = await postParsedText({
-      url: URL,
-    });
-    setIsImageLoading(false);
-    setOrder({ ...order, ...data });
-  };
-
-  const handleSubmitURL = () => {
-    postData();
-  };
-
   const handleSubmitJob = () => {
     closeJobInputModal();
     setIsJobInputModalOpen(false);
     setOrder({ date: date });
-    setURL("");
   };
 
   const checkIfAllOkay = (curAreInputsOkay) => {
@@ -114,7 +98,6 @@ const JobInputs = () => {
 
   return (
     <>
-      <Title />
       <div id="main-job-input-container">
         <CameraContainer />
         <Inputs
@@ -181,6 +164,7 @@ const Input = ({
       <span>{name}</span>
       <input
         className={
+          //if input is blank outlined in red
           areInputsOkay[`${lowerName}`] ? "form-field" : "form-field form-error"
         }
         id={`${lowerName}-input`}
@@ -194,40 +178,6 @@ const Input = ({
           }
         }}
       />
-    </div>
-  );
-};
-
-const URLInput = ({ setURL, handleSubmitURL, URL, isImageLoading }) => {
-  /* <URLInput
-        setURL={setURL}
-        handleSubmitURL={handleSubmitURL}
-        URL={URL}
-        isImageLoading={isImageLoading}
-      /> */
-
-  return (
-    <div id="url-input">
-      <div className="form-group" id="user-url-input">
-        <span>URL</span>
-        <input
-          className="form-field"
-          id="image-input"
-          type="text"
-          value={URL || ""}
-          placeholder="Image URL"
-          onChange={(e) => {
-            setURL(e.target.value);
-          }}
-        />
-        <span className="btn" id="url-submit" onClick={handleSubmitURL}>
-          {isImageLoading ? (
-            <CircularProgress size={20} style={{ color: "#fff" }} />
-          ) : (
-            "Submit"
-          )}
-        </span>
-      </div>
     </div>
   );
 };

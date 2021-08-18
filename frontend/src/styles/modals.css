@@ -19,7 +19,7 @@
   background: whitesmoke;
   border-radius: var(--border-radius);
   width: 95%;
-  min-height: 50vh;
+  min-height: 70vh;
   text-align: center;
   position: relative;
   display: flex;
@@ -47,13 +47,14 @@
 
 #main-job-input-container {
   display: flex;
+  margin-top: 4rem;
 }
 
 #job-input-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 35%;
 }
 
 #camera-container {
@@ -62,26 +63,34 @@
   align-items: center;
   justify-content: center;
   border-right: 1px solid #dbdbf3;
-  width: 50%;
+  width: 65%;
 }
 
-.camera-outline {
+.camera-container {
   min-width: 50%;
   max-width: 90%;
   aspect-ratio: 16/9;
-  outline: 5px dashed var(--group-background-focus);
   margin: 1rem;
 }
 
-video {
+.camera-container > video,
+#screenshot {
   width: 100%;
   aspect-ratio: 16/9;
+  outline: 2px solid var(--group-background-focus);
+  box-shadow: var(--box-shadow);
 }
 
 .camera-buttons {
   display: flex;
   width: 50%;
   justify-content: space-evenly;
+}
+
+.form-control {
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
 }
 
 #user-url-input {

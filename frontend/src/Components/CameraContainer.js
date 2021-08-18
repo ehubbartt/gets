@@ -3,9 +3,11 @@ import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { useGlobalContext } from "../context";
 import Webcam from "react-webcam";
+import { postParsedText } from "../services/get-text";
 
 const CameraContainer = () => {
   const webcamRef = useRef(null);
+
   const {
     isWebcamOpen,
     setIsWebcamOpen,
@@ -13,6 +15,10 @@ const CameraContainer = () => {
     setShowScreenshot,
     imgSRC,
     setImgSRC,
+    setImageBase64,
+    imageBase64,
+    setOrder,
+    order,
   } = useGlobalContext();
 
   const videoConstraints = {
@@ -23,14 +29,28 @@ const CameraContainer = () => {
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
+    setImageBase64(imageSrc.replace(/^data:image\/(png|jpeg|jpg);base64,/, ""));
+
     setImgSRC(imageSrc);
     setShowScreenshot(true);
     setIsWebcamOpen(false);
-  }, [webcamRef, setImgSRC, setIsWebcamOpen, setShowScreenshot]);
+  }, [
+    webcamRef,
+    setImgSRC,
+    setIsWebcamOpen,
+    setShowScreenshot,
+    setImageBase64,
+  ]);
 
   const back = () => {
     setShowScreenshot(false);
     setIsWebcamOpen(true);
+  };
+
+  const postData = async () => {
+    const data = await postParsedText({ image: imageBase64 });
+    console.log(data);
+    setOrder({ ...order, ...data });
   };
 
   return (
@@ -39,6 +59,7 @@ const CameraContainer = () => {
         //render camera switch if screenshot is not active
         !showScreenshot && (
           <FormControlLabel
+            className="form-control"
             control={
               <Switch
                 name="camera"
@@ -53,7 +74,11 @@ const CameraContainer = () => {
           />
         )
       }
-      <div className="camera-outline">
+      <div
+        className={
+          isWebcamOpen ? "camera-container" : "camera-container hidden"
+        }
+      >
         {
           //if screnshot is not active render webcam else render screenshot
           !showScreenshot ? (
@@ -66,7 +91,7 @@ const CameraContainer = () => {
               ></Webcam>
             )
           ) : (
-            <img src={imgSRC} alt="screenshot" />
+            <img src={imgSRC} alt="screenshot" id="screenshot" />
           )
         }
       </div>
@@ -87,7 +112,9 @@ const CameraContainer = () => {
               <div className="btn" onClick={back}>
                 Back
               </div>
-              {/* <div className="btn">Submit Image</div> */}
+              <div className="btn" onClick={postData}>
+                Submit Image
+              </div>
             </>
           )
         }

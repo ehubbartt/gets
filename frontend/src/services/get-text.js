@@ -4,14 +4,33 @@
  * @returns
  */
 export const postParsedText = async (data = {}) => {
-  const resp = await fetch("http://localhost:5000/text/parsed", {
+  const b64toBlob = (b64Data, contentType = "", sliceSize = 512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
+  const blob = b64toBlob(data.image, "image/jpeg");
+  let fd = new FormData();
+  fd.append("blob", blob);
+  const resp = await fetch("http://localhost:5000/api/image/text", {
     method: "POST",
     mode: "cors",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+
+    body: fd,
   });
   return resp.json();
 };

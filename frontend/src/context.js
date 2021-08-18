@@ -11,6 +11,7 @@ const AppProvider = ({ children }) => {
   const [isWebcamOpen, setIsWebcamOpen] = useState(false);
   const [imgSRC, setImgSRC] = useState("");
   const [showScreenshot, setShowScreenshot] = useState(false);
+  const [imageBase64, setImageBase64] = useState("");
   const [order, setOrder] = useState({
     so: null,
     pn: null,
@@ -76,6 +77,8 @@ const AppProvider = ({ children }) => {
         setShowScreenshot,
         imgSRC,
         setImgSRC,
+        imageBase64,
+        setImageBase64,
       }}
     >
       {children}
