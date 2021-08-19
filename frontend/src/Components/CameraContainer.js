@@ -1,20 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
-import { useGlobalContext } from "../context";
 
-const CameraContainer = ({ postData }) => {
-  const {
-    isWebcamOpen,
-    setIsWebcamOpen,
-    showScreenshot,
-    setShowScreenshot,
-    imgSRC,
-    setImgSRC,
-    setImageBase64,
-  } = useGlobalContext();
-
+const CameraContainer = ({
+  postData,
+  isWebcamOpen,
+  setIsWebcamOpen,
+  setImageBase64,
+  setShowScreenshot,
+  showScreenshot,
+}) => {
   const webcamRef = useRef(null);
-
+  const [imgSRC, setImgSRC] = useState("");
   const videoConstraints = {
     width: 1920,
     height: 1080,

@@ -11,17 +11,25 @@ import OrderImage from "./OrderImage";
  * @returns job inputs to be placed inside the modal
  */
 const JobInputs = () => {
-  const {
-    setIsJobInputModalOpen,
-    jobs,
-    setJobs,
-    closeJobInputModal,
-    order,
-    setOrder,
-    areInputsOkay,
-    setAreInputsOkay,
-  } = useGlobalContext();
-
+  const { jobs, setJobs } = useGlobalContext();
+  const [order, setOrder] = useState({
+    so: null,
+    pn: null,
+    bin: null,
+    dc: null,
+    due: null,
+    customer: null,
+    note: null,
+  });
+  const [areInputsOkay, setAreInputsOkay] = useState({
+    so: true,
+    pn: true,
+    bin: true,
+    dc: true,
+    due: true,
+    customer: true,
+    note: true,
+  });
   const [date, setDate] = useState("01/01/2021");
   const [isOrdersLoading, setIsOrdersLoading] = useState(false);
 
@@ -33,8 +41,6 @@ const JobInputs = () => {
   }, []);
 
   const handleSubmitJob = () => {
-    closeJobInputModal();
-    setIsJobInputModalOpen(false);
     setOrder({ date: date });
   };
 
@@ -99,7 +105,7 @@ const JobInputs = () => {
   return (
     <>
       <div id="main-job-input-container">
-        <OrderImage />
+        <OrderImage setOrder={setOrder} order={order} />
         <Inputs
           order={order}
           setOrder={setOrder}

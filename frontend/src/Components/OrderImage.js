@@ -1,20 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { useGlobalContext } from "../context";
 import { postParsedText } from "../services/get-text";
 import CameraContainer from "./CameraContainer";
 import FileDrop from "./FileDrop";
 
-const OrderImage = () => {
-  const {
-    isWebcamOpen,
-    setIsWebcamOpen,
-    showScreenshot,
-    imageBase64,
-    setOrder,
-    order,
-  } = useGlobalContext();
+const OrderImage = ({ order, setOrder }) => {
+  const [showScreenshot, setShowScreenshot] = useState(false);
+  const [isWebcamOpen, setIsWebcamOpen] = useState(false);
+  const [imageBase64, setImageBase64] = useState("");
 
   const postData = async () => {
     const data = await postParsedText({ image: imageBase64 });
@@ -30,9 +24,16 @@ const OrderImage = () => {
         showScreenshot={showScreenshot}
       />
       {!isWebcamOpen && !showScreenshot ? (
-        <FileDrop postData={postData} />
+        <FileDrop postData={postData} setImageBase64={setImageBase64} />
       ) : (
-        <CameraContainer postData={postData} />
+        <CameraContainer
+          postData={postData}
+          isWebcamOpen={isWebcamOpen}
+          setIsWebcamOpen={setIsWebcamOpen}
+          showScreenshot={showScreenshot}
+          setShowScreenshot={setShowScreenshot}
+          setImageBase64={setImageBase64}
+        />
       )}
     </div>
   );

@@ -4,52 +4,15 @@ import { jobsData } from "./data";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const [isJobInputModalOpen, setIsJobInputModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [jobs, setJobs] = useState(jobsData);
   const [isNavActive, setIsNavActive] = useState(true);
-  const [isWebcamOpen, setIsWebcamOpen] = useState(false);
-  const [imgSRC, setImgSRC] = useState("");
-  const [showScreenshot, setShowScreenshot] = useState(false);
-  const [imageBase64, setImageBase64] = useState("");
-  const [order, setOrder] = useState({
-    so: null,
-    pn: null,
-    bin: null,
-    dc: null,
-    due: null,
-    customer: null,
-    note: null,
-  });
-  const [areInputsOkay, setAreInputsOkay] = useState({
-    so: true,
-    pn: true,
-    bin: true,
-    dc: true,
-    due: true,
-    customer: true,
-    note: true,
-  });
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
   const closeModal = () => {
     setIsModalOpen(false);
-    turnOffAllModals();
   };
-
-  const openJobInputModal = () => {
-    setIsJobInputModalOpen(true);
-    openModal();
-  };
-  const closeJobInputModal = () => {
-    setIsJobInputModalOpen(false);
-    closeModal();
-  };
-
-  const turnOffAllModals = () => {
-    setIsJobInputModalOpen(false);
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
   return (
@@ -57,28 +20,12 @@ const AppProvider = ({ children }) => {
       value={{
         jobs,
         setJobs,
-        isJobInputModalOpen,
-        setIsJobInputModalOpen,
-        openJobInputModal,
-        closeJobInputModal,
         isModalOpen,
         setIsModalOpen,
-        openModal,
         closeModal,
-        order,
-        setOrder,
+        openModal,
         isNavActive,
         setIsNavActive,
-        areInputsOkay,
-        setAreInputsOkay,
-        isWebcamOpen,
-        setIsWebcamOpen,
-        showScreenshot,
-        setShowScreenshot,
-        imgSRC,
-        setImgSRC,
-        imageBase64,
-        setImageBase64,
       }}
     >
       {children}

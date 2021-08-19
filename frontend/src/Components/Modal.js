@@ -6,8 +6,9 @@ import JobInputs from "./JobInputs";
 /**
  * @returns a modal on the screen
  */
-const Modal = () => {
+const Modal = ({ children }) => {
   const { isModalOpen, closeModal, isJobInputModalOpen } = useGlobalContext();
+
   return (
     <div
       className={`${
@@ -17,7 +18,8 @@ const Modal = () => {
       <ModalContainer
         closeModal={closeModal}
         isJobInputModalOpen={isJobInputModalOpen}
-      />
+        children={children}
+      ></ModalContainer>
     </div>
   );
 };
@@ -26,10 +28,14 @@ const Modal = () => {
  * @returns the modal container and placed the appropriate component in the modal container
  * based on the state of the components
  */
-export const ModalContainer = ({ closeModal, isJobInputModalOpen }) => {
+export const ModalContainer = ({
+  closeModal,
+  isJobInputModalOpen,
+  children,
+}) => {
   return (
     <div className="modal-container">
-      {isJobInputModalOpen ? <JobInputs /> : <div />}
+      {children}
       <button className="close-modal-btn" onClick={closeModal}>
         <FaTimes></FaTimes>
       </button>
