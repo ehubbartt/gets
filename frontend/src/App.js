@@ -7,11 +7,6 @@ import Navbar from "./Components/Navbar";
 
 function App() {
   const { isNavActive } = useGlobalContext();
-  useEffect(() => {
-    console.log(
-      `sample URLs for testing:\nhttps://i.imgur.com/cAke54O.jpg\nhttps://i.imgur.com/b0apCDi.jpg?1\nhttps://i.imgur.com/C6q1LJ1.jpg?1\nhttps://i.imgur.com/wXMdv5q.jpg?1\nhttps://i.imgur.com/Mjf8um5.jpg`
-    );
-  }, []);
 
   const allLinks = [];
   for (let i = 0; i < navData.length; i++) {
@@ -20,6 +15,7 @@ function App() {
       allLinks.push(links[j]);
     }
   }
+
   return (
     <Router>
       <Navbar />
