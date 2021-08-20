@@ -6,13 +6,13 @@ import { useGlobalContext } from "../context";
  * @returns a modal on the screen
  */
 const Modal = ({ children }) => {
-  const { isModalOpen, closeModal } = useGlobalContext();
+  const { isModalOpen, closeModal, isNavActive } = useGlobalContext();
 
   return (
     <div
       className={`${
         isModalOpen ? "modal-overlay show-modal" : "modal-overlay"
-      }`}
+      } ${isNavActive ? "" : "modal-overlay-expand"}`}
     >
       <ModalContainer
         closeModal={closeModal}

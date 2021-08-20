@@ -56,7 +56,7 @@ li > a > svg {
 
 .link-selected {
   color: white;
-  background-color: #90a8f3;
+  background-color: var(--group-background-focus);
   border-radius: var(--border-radius);
 }
 .menu-in {

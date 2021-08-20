@@ -26,7 +26,7 @@ export const postParsedText = async (data = {}) => {
   const blob = b64toBlob(data.image, "image/jpeg");
   let fd = new FormData();
   fd.append("blob", blob);
-  const resp = await fetch("http://localhost:5000/api/image/text", {
+  const resp = await fetch("http://localhost:5000/api/image/parsed-text", {
     method: "POST",
     mode: "cors",
 

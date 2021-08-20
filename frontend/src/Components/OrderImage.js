@@ -12,7 +12,6 @@ const OrderImage = ({ order, setOrder }) => {
 
   const postData = async () => {
     const data = await postParsedText({ image: imageBase64 });
-    console.log(data);
     setOrder({ ...order, ...data });
   };
 

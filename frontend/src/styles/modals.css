@@ -10,6 +10,12 @@
   visibility: hidden;
   z-index: -1;
 }
+
+.modal-overlay-expand {
+  width: 100%;
+  left: 0;
+  transition: all 0.5s ease;
+}
 /* OPEN/CLOSE MODAL */
 .show-modal {
   visibility: visible;
@@ -64,6 +70,7 @@
   justify-content: center;
   border-right: 1px solid #dbdbf3;
   width: 65%;
+  padding: 1rem;
 }
 
 #file-drop {
@@ -89,6 +96,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin: 1rem;
 }
 
 #file-drop-text {

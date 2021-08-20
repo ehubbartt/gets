@@ -11,7 +11,7 @@ import OrderImage from "./OrderImage";
  * @returns job inputs to be placed inside the modal
  */
 const JobInputs = () => {
-  const { jobs, setJobs } = useGlobalContext();
+  const { jobs, setJobs, closeModal } = useGlobalContext();
   const [order, setOrder] = useState({
     so: null,
     pn: null,
@@ -42,6 +42,7 @@ const JobInputs = () => {
 
   const handleSubmitJob = () => {
     setOrder({ date: date });
+    closeModal();
   };
 
   const checkIfAllOkay = (curAreInputsOkay) => {
@@ -149,7 +150,7 @@ const Inputs = (props) => {
         );
       })}
       <button className="btn submit-btn" type="submit">
-        SUBMIT
+        Submit Order
       </button>
     </form>
   );

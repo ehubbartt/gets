@@ -8,6 +8,10 @@
   box-shadow: var(--box-shadow);
 }
 
+.btn:hover {
+  background: #819ef5;
+}
+
 .submit-btn {
   font-family: inherit;
   width: 150px;

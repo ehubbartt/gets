@@ -79,6 +79,7 @@ app.post("api/image/lines", upload.single("blob"), async (req, res) => {
  */
 app.post("/api/image/parsed-text", upload.single("blob"), async (req, res) => {
   const arrayBuffer = toArrayBuffer(req.file.buffer);
+  let allText = [];
 
   let result = await computerVisionClient.readInStream(arrayBuffer);
   let operation = result.operationLocation.split("/").slice(-1)[0];
