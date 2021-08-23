@@ -18,8 +18,23 @@ const Joblist = () => {
     })();
   }, [setJobs]);
 
+  const sortByDate = () => {
+    let curJobs = jobs;
+
+    curJobs.sort((a, b) => {
+      let date1 = a.due.split("/");
+      let date2 = b.due.split("/");
+
+      return compareAsc(
+        new Date(date1[0], date1[1], date1[2]),
+        new Date(date2[0], date2[1], date2[2])
+      );
+    });
+    console.log(curJobs);
+  };
+
   return (
-    <div id="joblist-container">
+    <div id="joblist-container" onClick={sortByDate}>
       <Title />
       {isLoading ? (
         <span>Loading...</span>
