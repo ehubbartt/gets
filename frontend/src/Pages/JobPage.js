@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../Components/Header";
 import Joblist from "../Components/Joblist";
 import Modal from "../Components/Modal";

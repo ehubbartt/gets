@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { useGlobalContext } from "../context";
 
 const FileDrop = ({ postData, setImageBase64 }) => {
   const [imgSRC, setImgSRC] = useState();

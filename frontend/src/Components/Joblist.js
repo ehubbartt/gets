@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context";
 import { getAllOrders } from "../services/orders.db";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import compareAsc from "date-fns/compareAsc";
 /**
  * @returns the list of current jobs
  */
@@ -48,7 +50,7 @@ const Jobs = ({ jobs }) => {
   return (
     <div className="jobs">
       {jobs.map((job) => {
-        return <Job key={job._id} job={job}></Job>;
+        return <Job key={job._id} id={job.id} job={job}></Job>;
       })}
     </div>
   );
@@ -65,6 +67,7 @@ const Job = ({ job }) => {
       <span>{due}</span>
       <span>{customer}</span>
       <span>{note}</span>
+      <BsThreeDotsVertical className="three-dots-job" />
     </div>
   );
 };

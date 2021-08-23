@@ -4,7 +4,6 @@ import { useGlobalContext } from "../context";
 import { createOrder } from "../services/orders.db";
 
 import { inputData } from "../data";
-import { getDate } from "../functions/getDate";
 import OrderImage from "./OrderImage";
 
 /**
@@ -30,18 +29,9 @@ const JobInputs = () => {
     customer: true,
     note: true,
   });
-  const [date, setDate] = useState("01/01/2021");
   const [isOrdersLoading, setIsOrdersLoading] = useState(false);
 
-  useEffect(() => {
-    const today = getDate();
-    setDate(today);
-    setOrder({ ...order, date: today });
-    // eslint-disable-next-line
-  }, []);
-
   const handleSubmitJob = () => {
-    setOrder({ date: date });
     closeModal();
   };
 
@@ -82,6 +72,7 @@ const JobInputs = () => {
 
   //FIXME: there is a memory leak here if you refresh the page too fast
   useEffect(() => {
+    console.log(order.date);
     const abortController = new AbortController();
     if (isOrdersLoading) {
       const isSubmitOkay = checkSubmitJob();
@@ -119,13 +110,13 @@ const JobInputs = () => {
   );
 };
 
-const Title = () => {
-  return (
-    <div className="title" id="modal-title">
-      <h1>Add a New Job</h1>
-    </div>
-  );
-};
+// const Title = () => {
+//   return (
+//     <div className="title" id="modal-title">
+//       <h1>Add a New Job</h1>
+//     </div>
+//   );
+// };
 
 const Inputs = (props) => {
   const { setIsOrdersLoading } = props;
