@@ -6,6 +6,7 @@ import compareAsc from "date-fns/compareAsc";
 /**
  * @returns the list of current jobs
  */
+//TODO: add sorting buttons to sort by date etc.
 const Joblist = () => {
   const { jobs, setJobs } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(true);

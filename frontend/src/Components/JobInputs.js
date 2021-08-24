@@ -125,7 +125,7 @@ const JobInputs = () => {
 //     </div>
 //   );
 // };
-
+//TODO: date input should be templated
 const Inputs = (props) => {
   const { setIsOrdersLoading } = props;
 
