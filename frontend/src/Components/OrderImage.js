@@ -7,6 +7,7 @@ import FileDrop from "./FileDrop";
 const OrderImage = ({ postData, setImageBase64 }) => {
   const [showScreenshot, setShowScreenshot] = useState(false);
   const [isWebcamOpen, setIsWebcamOpen] = useState(false);
+  const [isWebcamLoading, setIsWebcamLoading] = useState(false);
 
   return (
     <div id="image-main">
@@ -14,6 +15,7 @@ const OrderImage = ({ postData, setImageBase64 }) => {
         isWebcamOpen={isWebcamOpen}
         setIsWebcamOpen={setIsWebcamOpen}
         showScreenshot={showScreenshot}
+        setIsWebcamLoading={setIsWebcamLoading}
       />
       {!isWebcamOpen && !showScreenshot ? (
         <FileDrop postData={postData} setImageBase64={setImageBase64} />
@@ -25,13 +27,20 @@ const OrderImage = ({ postData, setImageBase64 }) => {
           showScreenshot={showScreenshot}
           setShowScreenshot={setShowScreenshot}
           setImageBase64={setImageBase64}
+          isWebcamLoading={isWebcamLoading}
+          setIsWebcamLoading={setIsWebcamLoading}
         />
       )}
     </div>
   );
 };
 
-const CameraSwitch = ({ isWebcamOpen, setIsWebcamOpen, showScreenshot }) => {
+const CameraSwitch = ({
+  isWebcamOpen,
+  setIsWebcamOpen,
+  showScreenshot,
+  setIsWebcamLoading,
+}) => {
   return (
     <>
       {
@@ -46,6 +55,7 @@ const CameraSwitch = ({ isWebcamOpen, setIsWebcamOpen, showScreenshot }) => {
                 checked={isWebcamOpen}
                 onChange={() => {
                   setIsWebcamOpen(!isWebcamOpen);
+                  setIsWebcamLoading(true);
                 }}
               />
             }

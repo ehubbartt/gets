@@ -91,9 +91,11 @@ const FileDrop = ({ postData, setImageBase64 }) => {
           <h4 id="file-drop-text">Drag file to upload or click</h4>
         )}
       </div>
-      <button className="btn" onClick={postData}>
-        Submit Image
-      </button>
+      {imgSRC ? (
+        <button className="btn" onClick={postData}>
+          Submit Image
+        </button>
+      ) : null}
     </>
   );
 };

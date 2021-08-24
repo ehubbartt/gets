@@ -9,10 +9,13 @@ import { FiClipboard } from "react-icons/fi";
 const PartOCR = ({ title }) => {
   const [allText, setAllText] = useState([]);
   const [imageBase64, setImageBase64] = useState("");
-
+  const [isTextLoading, setIsTextLoading] = useState(false);
+  //TODO: change loading to be animated
   const postData = async () => {
+    setIsTextLoading(true);
     const data = await postText({ image: imageBase64 });
     setAllText(data);
+    setIsTextLoading(false);
   };
 
   const copyText = async (e) => {
@@ -33,7 +36,11 @@ const PartOCR = ({ title }) => {
       <div id="ocr">
         <div id="ocr-container">
           <OrderImage postData={postData} setImageBase64={setImageBase64} />
-          <AllText allText={allText} copyText={copyText} />
+          <AllText
+            allText={allText}
+            copyText={copyText}
+            isTextLoading={isTextLoading}
+          />
         </div>
       </div>
     </>
@@ -42,13 +49,17 @@ const PartOCR = ({ title }) => {
 
 //TODO: style the text output
 const AllText = (props) => {
-  const { allText } = props;
+  const { allText, isTextLoading } = props;
   return (
     <div id="all-text-container">
       <h1>Text:</h1>
-      {allText.map((text, idx) => {
-        return <Text key={idx} text={text} {...props} />;
-      })}
+      {isTextLoading ? (
+        <div>Loading...</div>
+      ) : (
+        allText.map((text, idx) => {
+          return <Text key={idx} text={text} {...props} />;
+        })
+      )}
     </div>
   );
 };

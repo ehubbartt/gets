@@ -8,6 +8,8 @@ const CameraContainer = ({
   setImageBase64,
   setShowScreenshot,
   showScreenshot,
+  isWebcamLoading,
+  setIsWebcamLoading,
 }) => {
   const webcamRef = useRef(null);
   const [imgSRC, setImgSRC] = useState("");
@@ -43,12 +45,20 @@ const CameraContainer = ({
           //if screenshot is not active render webcam else render screenshot
           !showScreenshot ? (
             isWebcamOpen && (
-              <Webcam
-                audio={false}
-                ref={webcamRef}
-                screenshotFormat="image/jpeg"
-                videoConstraints={videoConstraints}
-              ></Webcam>
+              <>
+                {isWebcamLoading ? <div>Loading...</div> : null}
+                <Webcam
+                  audio={false}
+                  ref={webcamRef}
+                  screenshotFormat="image/jpeg"
+                  videoConstraints={videoConstraints}
+                  onUserMedia={() => {
+                    setTimeout(() => {
+                      setIsWebcamLoading(false);
+                    }, 500);
+                  }}
+                ></Webcam>
+              </>
             )
           ) : (
             <img src={imgSRC} alt="screenshot" id="screenshot" />
@@ -61,6 +71,7 @@ const CameraContainer = ({
         back={back}
         showScreenshot={showScreenshot}
         postData={postData}
+        isWebcamLoading={isWebcamLoading}
       />
     </>
   );
@@ -72,16 +83,19 @@ const CameraButtons = ({
   back,
   showScreenshot,
   postData,
+  isWebcamLoading,
 }) => {
   return (
     <div className="camera-buttons">
       {
         //if webcam is active, show snap button
-        isWebcamOpen && (
-          <div className="btn" onClick={capture}>
-            Snap
-          </div>
-        )
+        //TODO: handle if webcam is not loaded yet
+        isWebcamOpen &&
+          (isWebcamLoading ? null : (
+            <div className="btn" onClick={capture}>
+              Snap
+            </div>
+          ))
       }
 
       {

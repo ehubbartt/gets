@@ -33,6 +33,7 @@ const JobInputs = () => {
   const [imageBase64, setImageBase64] = useState("");
   const [isOrdersLoading, setIsOrdersLoading] = useState(false);
 
+  //TODO: handle if image is submitted before image exists
   const postData = async () => {
     const data = await postParsedText({ image: imageBase64 });
     setOrder({ ...order, ...data });
