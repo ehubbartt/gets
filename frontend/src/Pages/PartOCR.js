@@ -13,6 +13,10 @@ const PartOCR = ({ title }) => {
   const [isTextLoading, setIsTextLoading] = useState(false);
   //TODO: change loading to be animated
   const postData = async () => {
+    if (!imageBase64) {
+      console.error("image does not exist");
+      return;
+    }
     setIsTextLoading(true);
     const data = await postText({ image: imageBase64 });
     setAllText(data);

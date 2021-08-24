@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { useGlobalContext } from "../context";
 import { createOrder } from "../services/orders.db";
@@ -30,11 +30,15 @@ const JobInputs = () => {
     note: true,
   });
 
-  const [imageBase64, setImageBase64] = useState("");
+  const [imageBase64, setImageBase64] = useState();
   const [isOrdersLoading, setIsOrdersLoading] = useState(false);
 
   //TODO: handle if image is submitted before image exists
   const postData = async () => {
+    if (!imageBase64) {
+      console.error("image does not exist");
+      return;
+    }
     const data = await postParsedText({ image: imageBase64 });
     setOrder({ ...order, ...data });
   };
@@ -80,7 +84,7 @@ const JobInputs = () => {
 
   //FIXME: there is a memory leak here if you refresh the page too fast
   //TODO: figure out what the fuck is going on here
-  useEffect(() => {
+  const handleSubmit = async () => {
     const abortController = new AbortController();
     if (isOrdersLoading) {
       const isSubmitOkay = checkSubmitJob();
@@ -99,8 +103,7 @@ const JobInputs = () => {
     return () => {
       abortController.abort();
     };
-    // eslint-disable-next-line
-  }, [isOrdersLoading]);
+  };
 
   return (
     <>
@@ -112,6 +115,7 @@ const JobInputs = () => {
           setAreInputsOkay={setAreInputsOkay}
           areInputsOkay={areInputsOkay}
           setIsOrdersLoading={setIsOrdersLoading}
+          handleSubmit={handleSubmit}
         />
       </div>
     </>
@@ -127,7 +131,7 @@ const JobInputs = () => {
 // };
 //TODO: date input should be templated
 const Inputs = (props) => {
-  const { setIsOrdersLoading } = props;
+  const { setIsOrdersLoading, handleSubmit } = props;
 
   return (
     <form
@@ -135,6 +139,7 @@ const Inputs = (props) => {
       onSubmit={(e) => {
         e.preventDefault();
         setIsOrdersLoading(true);
+        handleSubmit();
       }}
     >
       {inputData.map((data, idx) => {
