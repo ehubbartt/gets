@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { BsImages } from "react-icons/bs";
 
 const FileDrop = ({ postData, setImageBase64 }) => {
   const [imgSRC, setImgSRC] = useState();
@@ -71,7 +72,6 @@ const FileDrop = ({ postData, setImageBase64 }) => {
     <>
       <div
         id="file-drop"
-        onClick={handleFileClick}
         onDrop={(e) => {
           dropHandler(e);
         }}
@@ -88,7 +88,14 @@ const FileDrop = ({ postData, setImageBase64 }) => {
         {imgSRC ? (
           <img src={imgSRC} alt="order" id="selected-image" />
         ) : (
-          <h4 id="file-drop-text">Drag file to upload or click</h4>
+          <>
+            <BsImages className="image-icon" />
+            <h4 className="file-drop-text">Drag file to upload</h4>
+            <h3 className="file-drop-text">OR</h3>
+            <button className="btn" onClick={handleFileClick}>
+              Browse Files
+            </button>
+          </>
         )}
       </div>
       {imgSRC ? (

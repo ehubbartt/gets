@@ -95,18 +95,29 @@
   padding: 10px;
   border-radius: var(--border-radius);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   margin: 1rem;
 }
 
-#file-drop-text {
+#file-drop > * {
+  margin: 0.25rem;
+}
+
+.file-drop-text {
   color: var(--group-background-focus);
 }
 
 #file-drop:hover {
   animation: dash 5s linear infinite;
+}
+
+.image-icon {
+  width: 10%;
+  height: 10%;
+  color: var(--group-background-focus);
 }
 
 @keyframes dash {
