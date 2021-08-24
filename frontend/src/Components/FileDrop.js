@@ -92,6 +92,7 @@ const FileDrop = ({ postData, setImageBase64 }) => {
         )}
       </div>
       {imgSRC ? (
+        //TODO:change to dynamic submit buttons
         <button className="btn" onClick={postData}>
           Submit Image
         </button>

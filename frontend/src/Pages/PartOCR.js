@@ -6,6 +6,7 @@ import { FiClipboard } from "react-icons/fi";
 
 //TODO: comment all functions that are not already'
 //TODO: look for things that are not needed in functions and files
+//TODO: options for the result text. ex. split on spaces
 const PartOCR = ({ title }) => {
   const [allText, setAllText] = useState([]);
   const [imageBase64, setImageBase64] = useState("");
