@@ -3,6 +3,7 @@ import { CgWorkAlt, CgTemplate } from "react-icons/cg";
 import JobPage from "./Pages/JobPage";
 import HomePage from "./Pages/HomePage";
 import PayPage from "./Pages/PayPage";
+import PartOCR from "./Pages/PartOCR";
 import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import InfoIcon from "@material-ui/icons/Info";
 import { BiBook } from "react-icons/bi";
@@ -91,9 +92,9 @@ export const navData = [
     links: [
       {
         id: 31,
-        page: <HomePage title="Part Numbers" />,
-        url: "/part-numbers",
-        text: "Part Numbers",
+        page: <PartOCR title="Part OCR" />,
+        url: "/part-ocr",
+        text: "Part OCR",
         icon: <GiCpu style={iconStyles.navIcon} />,
         exact: false,
       },

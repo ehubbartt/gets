@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { useGlobalContext } from "../context";
 import { createOrder } from "../services/orders.db";
-
+import { postParsedText } from "../services/get-text";
 import { inputData } from "../data";
 import OrderImage from "./OrderImage";
 
@@ -29,7 +29,14 @@ const JobInputs = () => {
     customer: true,
     note: true,
   });
+
+  const [imageBase64, setImageBase64] = useState("");
   const [isOrdersLoading, setIsOrdersLoading] = useState(false);
+
+  const postData = async () => {
+    const data = await postParsedText({ image: imageBase64 });
+    setOrder({ ...order, ...data });
+  };
 
   const handleSubmitJob = () => {
     closeModal();
@@ -72,7 +79,6 @@ const JobInputs = () => {
 
   //FIXME: there is a memory leak here if you refresh the page too fast
   useEffect(() => {
-    console.log(order.date);
     const abortController = new AbortController();
     if (isOrdersLoading) {
       const isSubmitOkay = checkSubmitJob();
@@ -97,7 +103,7 @@ const JobInputs = () => {
   return (
     <>
       <div id="main-job-input-container">
-        <OrderImage setOrder={setOrder} order={order} />
+        <OrderImage postData={postData} setImageBase64={setImageBase64} />
         <Inputs
           order={order}
           setOrder={setOrder}

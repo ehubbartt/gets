@@ -6,6 +6,7 @@ import "./styles/modals.css";
 import "./styles/inputs-buttons.css";
 import "./styles/job-list.css";
 import "./styles/pay.css";
+import "./styles/pay-ocr.css";
 import App from "./App";
 import { AppProvider } from "./context";
 

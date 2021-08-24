@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { postParsedText } from "../services/get-text";
 import CameraContainer from "./CameraContainer";
 import FileDrop from "./FileDrop";
 
-const OrderImage = ({ order, setOrder }) => {
+const OrderImage = ({ postData, setImageBase64 }) => {
   const [showScreenshot, setShowScreenshot] = useState(false);
   const [isWebcamOpen, setIsWebcamOpen] = useState(false);
-  const [imageBase64, setImageBase64] = useState("");
-
-  const postData = async () => {
-    const data = await postParsedText({ image: imageBase64 });
-    setOrder({ ...order, ...data });
-  };
 
   return (
     <div id="image-main">

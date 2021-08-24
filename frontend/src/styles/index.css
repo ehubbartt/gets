@@ -51,6 +51,7 @@ code {
 .main-section {
   background: #e4e9f7;
   min-height: 100vh;
+  height: 100vh;
   margin-left: 200px;
   transition: all 0.5s ease;
 }

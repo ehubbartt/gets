@@ -3,9 +3,9 @@ import Header from "../Components/Header";
 
 const HomePage = ({ title }) => {
   return (
-    <div>
+    <>
       <Header title={title} />
-    </div>
+    </>
   );
 };
 
