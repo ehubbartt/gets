@@ -3,13 +3,14 @@ import Header from "../Components/Header";
 import OrderImage from "../Components/OrderImage";
 import { postText } from "../services/get-text";
 
+//TODO: comment all functions that are not already'
+//TODO: look for things that are not needed in functions and files
 const PartOCR = ({ title }) => {
   const [allText, setAllText] = useState([]);
   const [imageBase64, setImageBase64] = useState("");
 
   const postData = async () => {
     const data = await postText({ image: imageBase64 });
-    console.log(data);
     setAllText(data);
   };
 
@@ -26,6 +27,7 @@ const PartOCR = ({ title }) => {
   );
 };
 
+//TODO: style the text output
 const AllText = ({ allText }) => {
   return (
     <div id="all-text-container">

@@ -78,6 +78,7 @@ const JobInputs = () => {
   };
 
   //FIXME: there is a memory leak here if you refresh the page too fast
+  //TODO: figure out what the fuck is going on here
   useEffect(() => {
     const abortController = new AbortController();
     if (isOrdersLoading) {

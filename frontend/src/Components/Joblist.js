@@ -30,7 +30,6 @@ const Joblist = () => {
         new Date(date2[0], date2[1], date2[2])
       );
     });
-    console.log(curJobs);
   };
 
   return (
@@ -57,6 +56,7 @@ const Title = () => {
       <h3>DUE</h3>
       <h3>Customer</h3>
       <h3>Note</h3>
+      <BsThreeDotsVertical className="three-dots-job hidden" />
     </div>
   );
 };

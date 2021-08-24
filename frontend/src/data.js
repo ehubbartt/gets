@@ -33,6 +33,7 @@ export const iconStyles = {
   },
 };
 
+//TODO: create separate data file for nav
 export const navData = [
   {
     sectionid: 1,

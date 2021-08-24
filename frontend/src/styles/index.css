@@ -28,7 +28,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+/*TODO: separate the styles into their respective components*/
 :root {
   --background-color: #e3e3f3;
   --input-color: #99a3ba;
@@ -43,7 +43,6 @@ code {
   --group-border-focus: var(--input-border-focus);
   --group-background-focus: #678efe;
   --link-selected-color: #678efe;
-  --grid-template-jobs: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   --border-radius: 2.5px;
   --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
