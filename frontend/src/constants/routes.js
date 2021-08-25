@@ -1,9 +1,12 @@
+//Page imports
+import JobPage from "../Pages/JobPage";
+import HomePage from "../Pages/HomePage";
+import PayPage from "../Pages/PayPage";
+import PartOCR from "../Pages/PartOCR";
+
+//icon imports
 import { AiOutlineHome, AiOutlineSafety } from "react-icons/ai";
 import { CgWorkAlt, CgTemplate } from "react-icons/cg";
-import JobPage from "./Pages/JobPage";
-import HomePage from "./Pages/HomePage";
-import PayPage from "./Pages/PayPage";
-import PartOCR from "./Pages/PartOCR";
 import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import InfoIcon from "@material-ui/icons/Info";
 import { BiBook } from "react-icons/bi";
@@ -16,24 +19,8 @@ import {
   GiMicroscope,
 } from "react-icons/gi";
 
-export const jobsData = [];
-export const job = {};
-const navIconSize = "20px";
-const menuIconSize = "30px";
-export const iconStyles = {
-  navIcon: {
-    width: navIconSize,
-    height: navIconSize,
-  },
-  menuIcon: {
-    width: menuIconSize,
-    height: menuIconSize,
-    cursor: "pointer",
-    color: "#494949",
-  },
-};
+import { iconStyles } from "./iconStyles";
 
-//TODO: create separate data file for nav
 export const navData = [
   {
     sectionid: 1,
@@ -191,19 +178,4 @@ export const navData = [
       },
     ],
   },
-];
-
-/**
- * name is the text before the input and the object name used for the
- * type is the type for the input
- * ph is the placeholder text for the input
- */
-export const inputData = [
-  { name: "SO", type: "string", ph: "Sales Order" },
-  { name: "PN", type: "string", ph: "Part Number" },
-  { name: "Bin", type: "string", ph: "Bin" },
-  { name: "DC", type: "string", ph: "Date Code" },
-  { name: "DUE", type: "string", ph: "Due Date" },
-  { name: "Customer", type: "string", ph: "Customer Name" },
-  { name: "Note", type: "string", ph: "Note" },
 ];

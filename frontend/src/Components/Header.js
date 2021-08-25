@@ -1,7 +1,7 @@
 import React from "react";
 import { useGlobalContext } from "../context";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
-import { iconStyles } from "../data";
+import { iconStyles } from "../constants/iconStyles";
 
 /**
  * @returns a header for the page

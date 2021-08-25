@@ -1,5 +1,5 @@
 import React from "react";
-import { navData } from "./data";
+import { navData } from "./constants/routes";
 import { useGlobalContext } from "./context";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";

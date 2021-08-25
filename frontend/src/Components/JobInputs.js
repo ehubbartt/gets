@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { useGlobalContext } from "../context";
 import { createOrder } from "../services/orders.db";
 import { postParsedText } from "../services/get-text";
-import { inputData } from "../data";
+import { inputData } from "../constants/data";
 import OrderImage from "./OrderImage";
+import { checkIfAllOkay, checkSubmitJob } from "../functions/check-submits";
 
 /**
  * @returns job inputs to be placed inside the modal
@@ -31,9 +32,8 @@ const JobInputs = () => {
   });
 
   const [imageBase64, setImageBase64] = useState();
-  const [isOrdersLoading, setIsOrdersLoading] = useState(false);
+  const [isCheckingInputs, setIsCheckingInputs] = useState(false);
 
-  //TODO: handle if image is submitted before image exists
   const postData = async () => {
     if (!imageBase64) {
       console.error("image does not exist");
@@ -47,62 +47,24 @@ const JobInputs = () => {
     closeModal();
   };
 
-  const checkIfAllOkay = (curAreInputsOkay) => {
-    return (
-      curAreInputsOkay.so &&
-      curAreInputsOkay.pn &&
-      curAreInputsOkay.bin &&
-      curAreInputsOkay.dc &&
-      curAreInputsOkay.due &&
-      curAreInputsOkay.customer
-    );
-  };
-
-  const checkSubmitJob = () => {
-    const curAreInputsOkay = areInputsOkay;
-    if (!order.so) {
-      curAreInputsOkay.so = false;
-    }
-    if (!order.pn) {
-      curAreInputsOkay.pn = false;
-    }
-    if (!order.bin) {
-      curAreInputsOkay.bin = false;
-    }
-    if (!order.dc) {
-      curAreInputsOkay.dc = false;
-    }
-    if (!order.due) {
-      curAreInputsOkay.due = false;
-    }
-    if (!order.customer) {
-      curAreInputsOkay.customer = false;
-    }
-    setAreInputsOkay(curAreInputsOkay);
-    return checkIfAllOkay(curAreInputsOkay);
-  };
-
-  //FIXME: there is a memory leak here if you refresh the page too fast
-  //TODO: figure out what the fuck is going on here
-  const handleSubmit = async () => {
+  const handleSubmit = (isSubmitOkay) => {
     const abortController = new AbortController();
-    if (isOrdersLoading) {
-      const isSubmitOkay = checkSubmitJob();
-      if (isSubmitOkay) {
-        const fetchData = async () => {
-          try {
-            const curOrder = await createOrder(order);
-            setJobs([...jobs, curOrder]);
-          } catch (err) {}
-        };
-        fetchData();
-        handleSubmitJob();
-      }
+    if (isSubmitOkay) {
+      fetchData();
+      handleSubmitJob();
     }
-    setIsOrdersLoading(false);
     return () => {
       abortController.abort();
     };
+  };
+
+  const fetchData = async () => {
+    try {
+      const curOrder = await createOrder(order);
+      setJobs([...jobs, curOrder]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -114,7 +76,6 @@ const JobInputs = () => {
           setOrder={setOrder}
           setAreInputsOkay={setAreInputsOkay}
           areInputsOkay={areInputsOkay}
-          setIsOrdersLoading={setIsOrdersLoading}
           handleSubmit={handleSubmit}
         />
       </div>
@@ -122,24 +83,19 @@ const JobInputs = () => {
   );
 };
 
-// const Title = () => {
-//   return (
-//     <div className="title" id="modal-title">
-//       <h1>Add a New Job</h1>
-//     </div>
-//   );
-// };
 //TODO: date input should be templated
 const Inputs = (props) => {
-  const { setIsOrdersLoading, handleSubmit } = props;
+  const { handleSubmit, areInputsOkay, order, setAreInputsOkay } = props;
 
   return (
     <form
       id="job-input-container"
       onSubmit={(e) => {
         e.preventDefault();
-        setIsOrdersLoading(true);
-        handleSubmit();
+        const curAreInputsOkay = checkSubmitJob(areInputsOkay, order);
+        setAreInputsOkay({ ...areInputsOkay });
+        const isSubmitOkay = checkIfAllOkay(curAreInputsOkay);
+        handleSubmit(isSubmitOkay);
       }}
     >
       {inputData.map((data, idx) => {

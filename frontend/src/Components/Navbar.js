@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { navData } from "../data";
+import { navData } from "../constants/routes.js";
+import { iconStyles } from "../constants/iconStyles";
 import { AiOutlineMenuFold } from "react-icons/ai";
-import { iconStyles } from "../data";
 import { useGlobalContext } from "../context";
 //TODO: navbar should not be a set amount of pixels so make it more responsive
 const Navbar = () => {

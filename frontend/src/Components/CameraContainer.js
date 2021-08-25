@@ -89,7 +89,6 @@ const CameraButtons = ({
     <div className="camera-buttons">
       {
         //if webcam is active, show snap button
-        //TODO: handle if webcam is not loaded yet
         isWebcamOpen &&
           (isWebcamLoading ? null : (
             <div className="btn" onClick={capture}>

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { jobsData } from "./data";
+import { jobsData } from "./constants/data";
 
 const AppContext = React.createContext();
 
