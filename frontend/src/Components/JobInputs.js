@@ -32,7 +32,6 @@ const JobInputs = () => {
   });
 
   const [imageBase64, setImageBase64] = useState();
-  const [isCheckingInputs, setIsCheckingInputs] = useState(false);
 
   const postData = async () => {
     if (!imageBase64) {

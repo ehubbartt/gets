@@ -76,6 +76,7 @@ app.post("api/image/lines", upload.single("blob"), async (req, res) => {
 /**
  * returns all the lines from the API request
  * BODY: form data of a file/blob
+ * TODO: before prod there needs to be error catching
  */
 app.post("/api/image/parsed-text", upload.single("blob"), async (req, res) => {
   const arrayBuffer = toArrayBuffer(req.file.buffer);
@@ -199,6 +200,16 @@ app.post("/create-order", async (req, res) => {
     useUnifiedTopology: true,
   });
   const response = await OrderModel.create(order);
+  res.json(response);
+});
+
+app.post("/remove-order", async (req, res) => {
+  const id = req.body.id;
+  mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  const response = await OrderModel.deleteOne({ id: id });
   res.json(response);
 });
 

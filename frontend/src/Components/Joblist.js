@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context";
 import { getAllOrders } from "../services/orders.db";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import IconButton from "@material-ui/core/IconButton";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 import compareAsc from "date-fns/compareAsc";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 /**
  * @returns the list of current jobs
  */
 //TODO: add sorting buttons to sort by date etc.
 const Joblist = () => {
-  const { jobs, setJobs } = useGlobalContext();
+  const { jobs, setJobs, removeJob } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -40,7 +44,14 @@ const Joblist = () => {
         <span>Loading...</span>
       ) : (
         <div className="scroll-container">
-          {jobs.length > 0 && <Jobs jobs={jobs} />}
+          {jobs.length > 0 && (
+            <Jobs
+              jobs={jobs}
+              anchorEl={anchorEl}
+              setAnchorEl={setAnchorEl}
+              removeJob={removeJob}
+            />
+          )}
         </div>
       )}
     </div>
@@ -57,23 +68,43 @@ const Title = () => {
       <h3>DUE</h3>
       <h3>Customer</h3>
       <h3>Note</h3>
-      <BsThreeDotsVertical className="three-dots-job hidden" />
+      <MoreVertIcon className="three-dots" style={{ display: "none" }} />
     </div>
   );
 };
 
-const Jobs = ({ jobs }) => {
+const Jobs = ({ jobs, anchorEl, setAnchorEl, removeJob }) => {
   return (
     <div className="jobs">
       {jobs.map((job) => {
-        return <Job key={job._id} id={job.id} job={job}></Job>;
+        return (
+          <Job
+            key={job._id}
+            value={job.id}
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            removeJob={removeJob}
+            job={job}
+          ></Job>
+        );
       })}
     </div>
   );
 };
 
-const Job = ({ job }) => {
+const Job = ({ job, anchorEl, setAnchorEl, value, removeJob }) => {
   const { so, pn, bin, dc, due, customer, note } = job;
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className="job-card">
       <span>{so}</span>
@@ -83,7 +114,30 @@ const Job = ({ job }) => {
       <span>{due}</span>
       <span>{customer}</span>
       <span>{note}</span>
-      <BsThreeDotsVertical className="three-dots-job" />
+      <IconButton
+        aria-label="more"
+        aria-controls="long-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreVertIcon className="three-dots-job" />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            removeJob(value);
+          }}
+        >
+          Remove
+        </MenuItem>
+      </Menu>
     </div>
   );
 };

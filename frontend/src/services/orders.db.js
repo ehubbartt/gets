@@ -17,3 +17,16 @@ export const createOrder = async (order = {}) => {
   });
   return resp.json();
 };
+
+export const removeOrder = async (id = {}) => {
+  const resp = await fetch("http://localhost:5000/remove-order", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(id),
+  });
+  return resp.json();
+};

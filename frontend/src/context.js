@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { jobsData } from "./constants/data";
+import { removeOrder } from "./services/orders.db";
 
 const AppContext = React.createContext();
 
@@ -15,6 +16,12 @@ const AppProvider = ({ children }) => {
     setIsModalOpen(true);
   };
 
+  const removeJob = (id) => {
+    console.log(id);
+    setJobs(jobs.filter((job) => job.id !== id));
+    removeOrder(id);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -26,6 +33,7 @@ const AppProvider = ({ children }) => {
         openModal,
         isNavActive,
         setIsNavActive,
+        removeJob,
       }}
     >
       {children}
