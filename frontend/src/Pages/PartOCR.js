@@ -4,6 +4,8 @@ import OrderImage from "../Components/OrderImage";
 import { postText } from "../services/get-text";
 import { FiClipboard } from "react-icons/fi";
 
+import "../styles/part-ocr.css";
+
 //TODO: comment all functions that are not already'
 //TODO: look for things that are not needed in functions and files
 //TODO: options for the result text. ex. split on spaces

@@ -3,6 +3,7 @@ import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import CameraContainer from "./CameraContainer";
 import FileDrop from "./FileDrop";
+import "../styles/image.css";
 
 const OrderImage = ({ postData, setImageBase64 }) => {
   const [showScreenshot, setShowScreenshot] = useState(false);

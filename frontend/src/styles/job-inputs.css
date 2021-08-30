@@ -1,0 +1,11 @@
+#main-job-input-container {
+  display: flex;
+  margin-top: 4rem;
+}
+
+#job-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 35%;
+}

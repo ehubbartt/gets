@@ -74,3 +74,13 @@ header > h1 {
 .hidden {
   display: none;
 }
+
+.menu-in {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+}
+
+.menu-out {
+  margin-left: 1em;
+}

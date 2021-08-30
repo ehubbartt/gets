@@ -59,12 +59,3 @@ li > a > svg {
   background-color: var(--group-background-focus);
   border-radius: var(--border-radius);
 }
-.menu-in {
-  position: absolute;
-  top: 1em;
-  right: 1em;
-}
-
-.menu-out {
-  margin-left: 1em;
-}

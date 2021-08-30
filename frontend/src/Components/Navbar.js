@@ -4,6 +4,8 @@ import { navData } from "../constants/routes.js";
 import { iconStyles } from "../constants/iconStyles";
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { useGlobalContext } from "../context";
+import "../styles/navbar.css";
+
 //TODO: navbar should not be a set amount of pixels so make it more responsive
 const Navbar = () => {
   const { isNavActive, setIsNavActive } = useGlobalContext();

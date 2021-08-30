@@ -7,6 +7,9 @@ import AddIcon from "@material-ui/icons/Add";
 import JobInputs from "../Components/JobInputs";
 import { useGlobalContext } from "../context";
 
+import "../styles/job-list.css";
+import "../styles/job-inputs.css";
+
 const JobPage = ({ title }) => {
   const { openModal } = useGlobalContext();
 

@@ -11,7 +11,7 @@ export const inputData = [
   { name: "PN", type: "string", ph: "Part Number" },
   { name: "Bin", type: "string", ph: "Bin" },
   { name: "DC", type: "string", ph: "Date Code" },
-  { name: "DUE", type: "string", ph: "Due Date" },
+  { name: "DUE", type: "string", ph: "Due Date", isDate: true },
   { name: "Customer", type: "string", ph: "Customer Name" },
   { name: "Note", type: "string", ph: "Note" },
 ];

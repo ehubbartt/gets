@@ -6,6 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import compareAsc from "date-fns/compareAsc";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+
 /**
  * @returns the list of current jobs
  */
@@ -91,7 +92,7 @@ const Jobs = ({ jobs, anchorEl, setAnchorEl, removeJob }) => {
   );
 };
 
-const Job = ({ job, anchorEl, setAnchorEl, value, removeJob }) => {
+const Job = ({ job, anchorEl, setAnchorEl, removeJob }) => {
   const { so, pn, bin, dc, due, customer, note, _id } = job;
   const open = Boolean(anchorEl);
 

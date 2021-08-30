@@ -6,7 +6,8 @@ import { postParsedText } from "../services/get-text";
 import { inputData } from "../constants/data";
 import OrderImage from "./OrderImage";
 import { checkIfAllOkay, checkSubmitJob } from "../functions/check-submits";
-
+import "react-calendar/dist/Calendar.css";
+import DatePicker from "react-date-picker";
 /**
  * @returns job inputs to be placed inside the modal
  */
@@ -32,6 +33,7 @@ const JobInputs = () => {
   });
 
   const [imageBase64, setImageBase64] = useState();
+  const [date, setDate] = useState(new Date());
 
   const postData = async () => {
     if (!imageBase64) {
@@ -77,6 +79,8 @@ const JobInputs = () => {
           setAreInputsOkay={setAreInputsOkay}
           areInputsOkay={areInputsOkay}
           handleSubmit={handleSubmit}
+          date={date}
+          setDate={setDate}
         />
       </div>
     </>
@@ -106,6 +110,7 @@ const Inputs = (props) => {
             name={data.name}
             type={data.type}
             ph={data.ph}
+            isDate={data.isDate}
           ></Input>
         );
       })}
@@ -124,27 +129,41 @@ const Input = ({
   order,
   setOrder,
   ph,
+  isDate,
+  date,
+  setDate,
 }) => {
   const lowerName = name.toLowerCase();
   return (
     <div className="form-group">
       <span>{name}</span>
-      <input
-        className={
-          //if input is blank outlined in red
-          areInputsOkay[`${lowerName}`] ? "form-field" : "form-field form-error"
-        }
-        id={`${lowerName}-input`}
-        placeholder={ph}
-        value={order[`${lowerName}`] || ""}
-        type={type}
-        onChange={(e) => {
-          setOrder({ ...order, [`${lowerName}`]: e.target.value });
-          if (!areInputsOkay[`${lowerName}`]) {
-            setAreInputsOkay({ ...areInputsOkay, [`${lowerName}`]: true });
+      {!isDate ? (
+        <input
+          className={
+            //if input is blank outlined in red
+            areInputsOkay[`${lowerName}`]
+              ? "form-field"
+              : "form-field form-error"
           }
-        }}
-      />
+          id={`${lowerName}-input`}
+          placeholder={ph}
+          value={order[`${lowerName}`] || ""}
+          type={type}
+          onChange={(e) => {
+            setOrder({ ...order, [`${lowerName}`]: e.target.value });
+            if (!areInputsOkay[`${lowerName}`]) {
+              setAreInputsOkay({ ...areInputsOkay, [`${lowerName}`]: true });
+            }
+          }}
+        />
+      ) : (
+        <DatePicker
+          minDate={new Date()}
+          required={true}
+          value={date}
+          onChange={setDate}
+        />
+      )}
     </div>
   );
 };

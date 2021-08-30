@@ -17,7 +17,6 @@ const AppProvider = ({ children }) => {
   };
 
   const removeJob = (id) => {
-    console.log(id);
     setJobs(jobs.filter((job) => job._id !== id));
     removeOrder({ id: id });
   };

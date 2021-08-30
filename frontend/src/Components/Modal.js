@@ -1,6 +1,7 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
 import { useGlobalContext } from "../context";
+import "../styles/modals.css";
 
 /**
  * @returns a modal on the screen
