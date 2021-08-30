@@ -209,8 +209,10 @@ app.post("/remove-order", async (req, res) => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const response = await OrderModel.deleteOne({ id: id });
-  res.json(response);
+  if (id) {
+    const response = await OrderModel.deleteOne({ _id: `${id}` });
+    res.json(response);
+  }
 });
 
 app.listen(5000);

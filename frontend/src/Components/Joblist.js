@@ -80,7 +80,6 @@ const Jobs = ({ jobs, anchorEl, setAnchorEl, removeJob }) => {
         return (
           <Job
             key={job._id}
-            value={job.id}
             anchorEl={anchorEl}
             setAnchorEl={setAnchorEl}
             removeJob={removeJob}
@@ -93,8 +92,7 @@ const Jobs = ({ jobs, anchorEl, setAnchorEl, removeJob }) => {
 };
 
 const Job = ({ job, anchorEl, setAnchorEl, value, removeJob }) => {
-  const { so, pn, bin, dc, due, customer, note } = job;
-
+  const { so, pn, bin, dc, due, customer, note, _id } = job;
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -118,7 +116,9 @@ const Job = ({ job, anchorEl, setAnchorEl, value, removeJob }) => {
         aria-label="more"
         aria-controls="long-menu"
         aria-haspopup="true"
-        onClick={handleClick}
+        onClick={(e) => {
+          handleClick(e);
+        }}
       >
         <MoreVertIcon className="three-dots-job" />
       </IconButton>
@@ -132,7 +132,7 @@ const Job = ({ job, anchorEl, setAnchorEl, value, removeJob }) => {
         <MenuItem
           onClick={() => {
             handleClose();
-            removeJob(value);
+            removeJob(_id);
           }}
         >
           Remove
