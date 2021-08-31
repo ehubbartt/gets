@@ -6,7 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import compareAsc from "date-fns/compareAsc";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-
+import { Grid } from "react-loading-icons";
 /**
  * @returns the list of current jobs
  */
@@ -42,7 +42,9 @@ const Joblist = () => {
     <div id="joblist-container" onClick={sortByDate}>
       <Title />
       {isLoading ? (
-        <span>Loading...</span>
+        <>
+          <Grid stroke="#678efe" style={{ margin: "50px" }} fill="#678efe" />
+        </>
       ) : (
         <div className="scroll-container">
           {jobs.length > 0 && (
