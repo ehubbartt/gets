@@ -4,6 +4,7 @@ import { BsImages } from "react-icons/bs";
 const FileDrop = ({ postData, setImageBase64 }) => {
   const [imgSRC, setImgSRC] = useState();
   const fileInputRef = useRef();
+  const imgRef = useRef();
 
   const dropHandler = (e) => {
     e.preventDefault();
@@ -78,6 +79,14 @@ const FileDrop = ({ postData, setImageBase64 }) => {
         onDragOver={(e) => {
           dragOverHandler(e);
         }}
+        style={
+          imgSRC && {
+            aspectRatio: `${imgRef.naturalWidth}/${imgRef.naturalHeight}`,
+          }
+        }
+        onClick={() => {
+          imgSRC && handleFileClick();
+        }}
       >
         <input
           type="file"
@@ -86,7 +95,7 @@ const FileDrop = ({ postData, setImageBase64 }) => {
           style={{ display: "none" }}
         />
         {imgSRC ? (
-          <img src={imgSRC} alt="order" id="selected-image" />
+          <img src={imgSRC} alt="order" id="selected-image" ref={imgRef} />
         ) : (
           <>
             <BsImages className="image-icon" />
@@ -99,7 +108,6 @@ const FileDrop = ({ postData, setImageBase64 }) => {
         )}
       </div>
       {imgSRC ? (
-        //TODO:change to dynamic submit buttons
         <button className="btn" onClick={postData}>
           Submit Image
         </button>
