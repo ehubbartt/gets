@@ -1,7 +1,4 @@
 "use strict";
-// URL images containing printed and/or handwritten text.
-// The URL can point to image files (.jpg/.png/.bmp) or multi-page files (.pdf, .tiff).
-const getsTestUrl = "https://i.imgur.com/cAke54O.jpg";
 import express from "express";
 const app = express();
 import mongoose from "mongoose";
@@ -20,8 +17,8 @@ var upload = multer();
  * please put your own auth key and endpoint here so that we don't flood
  * the same api calls
  */
-const key = "d975bfc53a0344559b65c73af2f67fc3";
-const endpoint = "https://gets-test.cognitiveservices.azure.com/";
+const key = "8e7cc8f3e2d146638f14f211574c76a3";
+const endpoint = "https://gets.cognitiveservices.azure.com/";
 const mongoURI =
   "mongodb+srv://admin:admin@gets.ogmrc.mongodb.net/gets?retryWrites=true&w=majority";
 
