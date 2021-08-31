@@ -64,13 +64,13 @@ const Joblist = () => {
 const Title = () => {
   return (
     <div className="title">
-      <h3>SO</h3>
-      <h3>PN</h3>
-      <h3>Bin</h3>
-      <h3>DC</h3>
-      <h3>DUE</h3>
-      <h3>Customer</h3>
-      <h3>Note</h3>
+      <h1>SO</h1>
+      <h1>PN</h1>
+      <h1>Bin</h1>
+      <h1>DC</h1>
+      <h1>DUE</h1>
+      <h1>Customer</h1>
+      <h1>Note</h1>
       <MoreVertIcon className="three-dots" style={{ display: "none" }} />
     </div>
   );
@@ -108,13 +108,13 @@ const Job = ({ job, anchorEl, setAnchorEl, removeJob }) => {
 
   return (
     <div className="job-card">
-      <span>{so}</span>
-      <span>{pn}</span>
-      <span>{bin}</span>
-      <span>{dc}</span>
-      <span>{due}</span>
-      <span>{customer}</span>
-      <span>{note}</span>
+      <h3>{so}</h3>
+      <h3>{pn}</h3>
+      <h3>{bin}</h3>
+      <h3>{dc}</h3>
+      <h3>{due}</h3>
+      <h3>{customer}</h3>
+      <h3>{note}</h3>
       <IconButton
         aria-label="more"
         aria-controls="long-menu"

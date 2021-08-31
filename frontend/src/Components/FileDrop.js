@@ -69,6 +69,10 @@ const FileDrop = ({ postData, setImageBase64 }) => {
     );
   };
 
+  const clearImage = () => {
+    setImgSRC(null);
+  };
+
   return (
     <>
       <div
@@ -108,9 +112,14 @@ const FileDrop = ({ postData, setImageBase64 }) => {
         )}
       </div>
       {imgSRC ? (
-        <button className="btn" onClick={postData}>
-          Submit Image
-        </button>
+        <div className="btn-container">
+          <button className="btn" onClick={clearImage}>
+            Clear
+          </button>
+          <button className="btn" onClick={postData}>
+            Submit Image
+          </button>
+        </div>
       ) : null}
     </>
   );

@@ -95,3 +95,9 @@
   top: 0.5rem;
   left: 1rem;
 }
+
+.btn-container {
+  display: flex;
+  width: 50%;
+  justify-content: space-evenly;
+}
