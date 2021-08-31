@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
+import { ThreeDots } from "react-loading-icons";
 
 const CameraContainer = ({
   postData,
@@ -46,7 +47,12 @@ const CameraContainer = ({
           !showScreenshot ? (
             isWebcamOpen && (
               <>
-                {isWebcamLoading ? <div>Loading...</div> : null}
+                {isWebcamLoading ? (
+                  <ThreeDots
+                    style={{ position: "absolute" }}
+                    fill="#678efe"
+                  ></ThreeDots>
+                ) : null}
                 <Webcam
                   audio={false}
                   ref={webcamRef}

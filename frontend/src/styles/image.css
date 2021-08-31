@@ -70,6 +70,10 @@
   max-width: 90%;
   aspect-ratio: 16/9;
   margin: 1rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .camera-container > video,
