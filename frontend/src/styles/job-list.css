@@ -60,3 +60,23 @@
 .three-dots-job:hover {
   color: #888;
 }
+
+.title-text-container {
+  display: flex;
+  align-items: center;
+}
+
+.title-text-container > h1 {
+  margin-right: 0.25rem;
+}
+
+.sort-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  transition: 0.25s linear;
+}
+
+.flip {
+  transform: rotate(180deg);
+}

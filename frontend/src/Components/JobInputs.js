@@ -19,7 +19,7 @@ const JobInputs = () => {
     pn: null,
     bin: null,
     dc: null,
-    due: format(new Date(), "P"),
+    due: new Date(),
     customer: null,
     note: null,
   });
@@ -103,7 +103,7 @@ const Inputs = (props) => {
       id="job-input-container"
       onSubmit={(e) => {
         e.preventDefault();
-        setOrder({ ...order, due: format(date, "P") });
+        setOrder({ ...order, due: date });
         const curAreInputsOkay = checkSubmitJob(areInputsOkay, order, date);
         setAreInputsOkay({ ...areInputsOkay });
         const isSubmitOkay = checkIfAllOkay(curAreInputsOkay);
