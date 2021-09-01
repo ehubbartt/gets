@@ -8,6 +8,7 @@ import OrderImage from "./OrderImage";
 import { checkIfAllOkay, checkSubmitJob } from "../functions/check-submits";
 import "react-calendar/dist/Calendar.css";
 import DatePicker from "react-date-picker";
+import format from "date-fns/format";
 /**
  * @returns job inputs to be placed inside the modal
  */
@@ -18,7 +19,7 @@ const JobInputs = () => {
     pn: null,
     bin: null,
     dc: null,
-    due: null,
+    due: format(new Date(), "P"),
     customer: null,
     note: null,
   });
@@ -87,16 +88,23 @@ const JobInputs = () => {
   );
 };
 
-//TODO: date input should be templated
 const Inputs = (props) => {
-  const { handleSubmit, areInputsOkay, order, setAreInputsOkay } = props;
+  const {
+    handleSubmit,
+    areInputsOkay,
+    order,
+    setAreInputsOkay,
+    date,
+    setOrder,
+  } = props;
 
   return (
     <form
       id="job-input-container"
       onSubmit={(e) => {
         e.preventDefault();
-        const curAreInputsOkay = checkSubmitJob(areInputsOkay, order);
+        setOrder({ ...order, due: format(date, "P") });
+        const curAreInputsOkay = checkSubmitJob(areInputsOkay, order, date);
         setAreInputsOkay({ ...areInputsOkay });
         const isSubmitOkay = checkIfAllOkay(curAreInputsOkay);
         handleSubmit(isSubmitOkay);

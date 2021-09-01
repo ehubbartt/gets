@@ -9,7 +9,7 @@ export const checkIfAllOkay = (curAreInputsOkay) => {
   );
 };
 
-export const checkSubmitJob = (areInputsOkay, order) => {
+export const checkSubmitJob = (areInputsOkay, order, date) => {
   const curAreInputsOkay = areInputsOkay;
   if (!order.so) {
     curAreInputsOkay.so = false;
@@ -23,11 +23,14 @@ export const checkSubmitJob = (areInputsOkay, order) => {
   if (!order.dc) {
     curAreInputsOkay.dc = false;
   }
-  if (!order.due) {
+  if (!date) {
     curAreInputsOkay.due = false;
+  } else {
+    curAreInputsOkay.due = true;
   }
   if (!order.customer) {
     curAreInputsOkay.customer = false;
   }
+  console.log(curAreInputsOkay);
   return curAreInputsOkay;
 };
