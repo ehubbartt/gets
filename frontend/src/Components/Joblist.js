@@ -61,20 +61,20 @@ const Joblist = () => {
 const Title = ({ isDueDesc, handleDueClick }) => {
   return (
     <div className="title">
-      <h1>Priority</h1>
-      <h1>SO</h1>
-      <h1>PN</h1>
-      <h1>Bin</h1>
-      <h1>DC</h1>
+      <h1 className="title-text">Priority</h1>
+      <h1 className="title-text">SO</h1>
+      <h1 className="title-text">PN</h1>
+      <h1 className="title-text">Bin</h1>
+      <h1 className="title-text">DC</h1>
       <div className="title-text-container">
-        <h1>DUE</h1>
+        <h1 className="title-text">DUE</h1>
         <HiSortDescending
           onClick={handleDueClick}
           className={isDueDesc ? "sort-icon" : "sort-icon flip"}
         />
       </div>
-      <h1>Customer</h1>
-      <h1>Note</h1>
+      <h1 className="title-text">Customer</h1>
+      <h1 className="title-text">Note</h1>
       <MoreVertIcon className="three-dots" style={{ display: "none" }} />
     </div>
   );
@@ -142,13 +142,13 @@ const Job = ({ job, anchorEl, setAnchorEl, removeJob }) => {
   return (
     <div className={`job-card ${priority}`} style={cardStyle}>
       <h3 className="priority">{priority.toUpperCase()}</h3>
-      <h3>{so}</h3>
-      <h3>{pn}</h3>
-      <h3>{bin}</h3>
-      <h3>{dc}</h3>
-      <h3>{format(new Date(due), "P")}</h3>
-      <h3>{customer}</h3>
-      <h3>{note}</h3>
+      <h3 className="card-text">{so}</h3>
+      <h3 className="card-text">{pn}</h3>
+      <h3 className="card-text">{bin}</h3>
+      <h3 className="card-text">{dc}</h3>
+      <h3 className="card-text">{format(new Date(due), "P")}</h3>
+      <h3 className="card-text">{customer}</h3>
+      <h3 className="card-text">{note}</h3>
       <IconButton
         aria-label="more"
         aria-controls="long-menu"

@@ -29,6 +29,10 @@
   min-width: 900px;
 }
 
+.title-text {
+  font-weight: bold;
+}
+
 .job-card {
   display: grid;
   grid-template-columns: var(--grid-template-jobs);
@@ -44,7 +48,7 @@
   min-width: 900px;
 }
 
-.job-card > span {
+.card-text {
   white-space: nowrap;
   display: block;
   text-overflow: ellipsis;
