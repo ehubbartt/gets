@@ -7,6 +7,7 @@ import OrderImage from "./OrderImage";
 import { checkIfAllOkay, checkSubmitJob } from "../functions/check-submits";
 import "react-calendar/dist/Calendar.css";
 import DatePicker from "react-date-picker";
+import { sortByDate } from "../functions/sorting";
 
 /**
  * @returns job inputs to be placed inside the modal
@@ -47,6 +48,7 @@ const JobInputs = () => {
   const handleSubmitJob = () => {
     setOrder({});
     closeModal();
+    setDate(new Date());
   };
 
   const handleSubmit = (isSubmitOkay) => {
@@ -63,7 +65,8 @@ const JobInputs = () => {
   const fetchData = async () => {
     try {
       const curOrder = await createOrder({ ...order, due: date });
-      setJobs([...jobs, curOrder]);
+      let sortedData = sortByDate([...jobs, curOrder], true);
+      setJobs([...sortedData]);
     } catch (err) {
       console.error(err);
     }
