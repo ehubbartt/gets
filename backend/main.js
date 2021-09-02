@@ -127,9 +127,14 @@ app.get("/all-orders", async (req, res) => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const orders = await OrderModel.find({});
-  mongoose.connection.close();
-  res.send(orders);
+  try {
+    const orders = await OrderModel.find({});
+    mongoose.connection.close();
+    res.send(orders);
+  } catch (error) {
+    console.log(error._message);
+    res.status(422).send({ error: error._message });
+  }
 });
 
 app.post("/create-order", async (req, res) => {
@@ -138,8 +143,13 @@ app.post("/create-order", async (req, res) => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const response = await OrderModel.create(order);
-  res.json(response);
+  try {
+    const response = await OrderModel.create(order);
+    res.json(response);
+  } catch (error) {
+    console.log(error._message);
+    res.status(422).send({ error: error._message });
+  }
 });
 
 app.post("/remove-order", async (req, res) => {
@@ -148,9 +158,12 @@ app.post("/remove-order", async (req, res) => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  if (id) {
+  try {
     const response = await OrderModel.deleteOne({ _id: `${id}` });
     res.json(response);
+  } catch (error) {
+    console.log(error._message);
+    res.status(422).send({ error: error._message });
   }
 });
 
