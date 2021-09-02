@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useGlobalContext } from "../context";
 import { createOrder } from "../services/orders.db";
 import { postParsedText } from "../services/get-text";
@@ -8,7 +7,7 @@ import OrderImage from "./OrderImage";
 import { checkIfAllOkay, checkSubmitJob } from "../functions/check-submits";
 import "react-calendar/dist/Calendar.css";
 import DatePicker from "react-date-picker";
-import format from "date-fns/format";
+
 /**
  * @returns job inputs to be placed inside the modal
  */

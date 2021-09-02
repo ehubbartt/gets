@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 200px;
-  width: calc(100% - 200px);
+  width: calc(100% - var(--navbar-width));
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: grid;
@@ -24,8 +24,8 @@
 .modal-container {
   background: whitesmoke;
   border-radius: var(--border-radius);
-  width: 95%;
-  height: 70vh;
+  min-width: 95%;
+  min-height: 70vh;
   max-width: 80vh;
   text-align: center;
   position: relative;

@@ -45,13 +45,14 @@ code {
   --link-selected-color: #678efe;
   --border-radius: 2.5px;
   --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  --navbar-width: 250px;
 }
 
 .main-section {
   background: #e4e9f7;
   min-height: 100vh;
   height: 100vh;
-  margin-left: 200px;
+  margin-left: var(--navbar-width);
   transition: all 0.5s ease;
 }
 
