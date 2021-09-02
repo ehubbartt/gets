@@ -12,6 +12,7 @@
   display: flex;
   justify-content: center;
   transform: translate(-100%);
+  font-size: 1.2rem;
 }
 
 .show-navbar {
@@ -32,7 +33,7 @@
   padding: 2px;
 }
 .nav-links a {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   text-decoration: none;
 }
 

@@ -77,7 +77,6 @@ app.post("api/image/lines", upload.single("blob"), async (req, res) => {
 /**
  * returns all the lines from the API request
  * BODY: form data of a file/blob
- * TODO: before prod there needs to be error catching
  */
 app.post("/api/image/parsed-text", upload.single("blob"), async (req, res) => {
   const arrayBuffer = toArrayBuffer(req.file.buffer);

@@ -169,6 +169,7 @@ const Input = ({
           required={true}
           value={date}
           onChange={setDate}
+          className="date-custom"
         />
       )}
     </div>
