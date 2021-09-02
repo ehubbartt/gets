@@ -31,6 +31,5 @@ export const checkSubmitJob = (areInputsOkay, order, date) => {
   if (!order.customer) {
     curAreInputsOkay.customer = false;
   }
-  console.log(curAreInputsOkay);
   return curAreInputsOkay;
 };
