@@ -62,7 +62,7 @@ const JobInputs = () => {
 
   const fetchData = async () => {
     try {
-      const curOrder = await createOrder(order);
+      const curOrder = await createOrder({ ...order, due: date });
       setJobs([...jobs, curOrder]);
     } catch (err) {
       console.error(err);

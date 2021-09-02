@@ -101,6 +101,12 @@ const Job = ({ job, anchorEl, setAnchorEl, removeJob }) => {
   const { so, pn, bin, dc, due, customer, note, _id } = job;
   const open = Boolean(anchorEl);
 
+  const today = new Date();
+  let date = new Date(due);
+  let priority = "";
+  let differenceInDays =
+    (today.getTime() - date.getTime()) / (1000 * 3600 * 24);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
