@@ -122,64 +122,6 @@ app.post("/api/image/text", upload.single("blob"), async (req, res) => {
   }
 });
 
-/**
- * post req of http://localhost:5000/param
- * returns all the text from the image in an array
- * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
- */
-app.post("/api/url/text", async (req, res) => {
-  const URL = req.body.url;
-  let result = await computerVisionClient.read(URL);
-
-  let operation = result.operationLocation.split("/").slice(-1)[0];
-
-  while (result.status !== STATUS_SUCCEEDED) {
-    result = await computerVisionClient.getReadResult(operation);
-  }
-  const data = result.analyzeResult.readResults;
-
-  for (const page in data) {
-    if (data.length > 1) {
-      // TODO:console.log(`==== Page: ${page}`); need to implement multiple page support
-    }
-    const lines = data[page].lines;
-    const allText = splitOnColon(lines);
-  }
-  res.send(allText);
-});
-
-/**
- * returns a parsed version of all the text from the image in an object
- * containing only the text that we want from the image instead of all the text
- *
- * check ../data for more info on the keys
- *
- * BODY: pass in a json object in the format of... {"url" : "<image-address>"}
- */
-app.post("/api/url/parsed-text", async (req, res) => {
-  let allText = [];
-
-  const URL = req.body.url;
-  let result = await computerVisionClient.read(URL);
-
-  let operation = result.operationLocation.split("/").slice(-1)[0];
-
-  while (result.status !== STATUS_SUCCEEDED) {
-    result = await computerVisionClient.getReadResult(operation);
-  }
-  const data = result.analyzeResult.readResults;
-  for (const page in data) {
-    if (data.length > 1) {
-      // console.log(`==== Page: ${page}`); need to implement multiple page support
-    }
-    const lines = data[page].lines;
-    allText = splitOnColon(lines);
-  }
-  //TODO: need to implement something where if there are multiple matches for a key it will give both options
-  const parsedText = createParsedText(allText);
-  res.send(parsedText);
-});
-
 app.get("/all-orders", async (req, res) => {
   mongoose.connect(mongoURI, {
     useNewUrlParser: true,
