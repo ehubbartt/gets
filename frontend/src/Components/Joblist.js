@@ -37,13 +37,13 @@ const Joblist = () => {
 
   return (
     <div id="joblist-container">
-      <Title handleDueClick={handleDueClick} isDueDesc={isDueDesc} />
       {isLoading ? (
         <>
           <Grid stroke="#678efe" style={{ margin: "50px" }} fill="#678efe" />
         </>
       ) : (
         <div className="scroll-container">
+          <Title handleDueClick={handleDueClick} isDueDesc={isDueDesc} />
           {jobs.length > 0 && (
             <Jobs
               jobs={jobs}
@@ -61,6 +61,7 @@ const Joblist = () => {
 const Title = ({ isDueDesc, handleDueClick }) => {
   return (
     <div className="title">
+      <h1>Priority</h1>
       <h1>SO</h1>
       <h1>PN</h1>
       <h1>Bin</h1>
@@ -101,11 +102,35 @@ const Job = ({ job, anchorEl, setAnchorEl, removeJob }) => {
   const { so, pn, bin, dc, due, customer, note, _id } = job;
   const open = Boolean(anchorEl);
 
+  const cardStyle = {
+    background: "",
+  };
+
+  // const clamp = (days, difference) => {
+  //   // console.log(days, difference);
+  //   const min = 0.2;
+  //   const max = 0.9;
+  //   const ratio = 1 - difference / days;
+  //   // console.log(ratio);
+
+  //   return ratio < min ? min : ratio > max ? max : ratio;
+  // };
+
   const today = new Date();
   let date = new Date(due);
   let priority = "";
   let differenceInDays =
-    (today.getTime() - date.getTime()) / (1000 * 3600 * 24);
+    (date.getTime() - today.getTime()) / (1000 * 3600 * 24);
+  if (differenceInDays < 0) {
+    priority = "high";
+    cardStyle.background = `rgb(255, 105, 97, ${0.5})`;
+  } else if (differenceInDays < 7) {
+    priority = "medium";
+    cardStyle.background = `rgb(255, 255, 153, ${0.5})`;
+  } else {
+    priority = "low";
+    cardStyle.background = `rgb(193, 225, 193, ${0.5})`;
+  }
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -115,7 +140,8 @@ const Job = ({ job, anchorEl, setAnchorEl, removeJob }) => {
     setAnchorEl(null);
   };
   return (
-    <div className="job-card">
+    <div className={`job-card ${priority}`} style={cardStyle}>
+      <h3 className="priority">{priority.toUpperCase()}</h3>
       <h3>{so}</h3>
       <h3>{pn}</h3>
       <h3>{bin}</h3>
