@@ -67,7 +67,11 @@ app.post("api/image/lines", upload.single("blob"), async (req, res) => {
 
   const lines = data[0].lines;
   console.log(lines);
-  res.send(lines);
+  try {
+    res.send(lines);
+  } catch (error) {
+    res.status(400).send(error);
+  }
 });
 
 /**
@@ -87,15 +91,15 @@ app.post("/api/image/parsed-text", upload.single("blob"), async (req, res) => {
   }
   const data = result.analyzeResult.readResults;
 
-  for (const page in data) {
-    if (data.length > 1) {
-      // console.log(`==== Page: ${page}`); need to implement multiple page support
-    }
-    const lines = data[page].lines;
-    allText = splitOnColon(lines);
-  }
+  const lines = data[0].lines;
+  allText = splitOnColon(lines);
+
   const parsedText = createParsedText(allText);
-  res.send(parsedText);
+  try {
+    res.send(parsedText);
+  } catch (error) {
+    res.status(400).send(error);
+  }
 });
 
 /**
@@ -113,12 +117,12 @@ app.post("/api/image/text", upload.single("blob"), async (req, res) => {
   }
   const data = result.analyzeResult.readResults;
 
-  for (const page in data) {
-    if (data.length > 1) {
-    }
-    const lines = data[page].lines;
-    const allText = splitOnColon(lines);
+  const lines = data[0].lines;
+  const allText = splitOnColon(lines);
+  try {
     res.send(allText);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
