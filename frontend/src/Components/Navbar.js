@@ -1,14 +1,16 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { navData } from "../constants/routes.js";
 import { iconStyles } from "../constants/iconStyles";
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { useGlobalContext } from "../context";
+import NavSection from "./NavSection";
+
 import "../styles/navbar.css";
 
 //TODO: navbar should not be a set amount of pixels so make it more responsive
 const Navbar = () => {
   const { isNavActive, setIsNavActive } = useGlobalContext();
+
   return (
     <nav className={isNavActive ? "navbar show-navbar" : "navbar"}>
       <AiOutlineMenuFold
@@ -30,50 +32,6 @@ const Navbar = () => {
         })}
       </div>
     </nav>
-  );
-};
-
-const NavSection = ({ links, section }) => {
-  return (
-    <section id={section}>
-      <h3 className="nav-section">{section}</h3>
-      <ul className="nav-links">
-        {links.map((link) => {
-          return (
-            <SingleLink
-              key={link.id}
-              url={link.url}
-              text={link.text}
-              icon={link.icon}
-              exact={link.exact}
-            ></SingleLink>
-          );
-        })}
-      </ul>
-    </section>
-  );
-};
-
-const SingleLink = ({ url, text, icon, exact }) => {
-  return (
-    <li className="single-link">
-      {exact ? (
-        <NavLink
-          className="nav-link"
-          to={url}
-          exact
-          activeClassName="link-selected"
-        >
-          {icon}
-          <h5>{text}</h5>
-        </NavLink>
-      ) : (
-        <NavLink className="nav-link" to={url} activeClassName="link-selected">
-          {icon}
-          <h5>{text}</h5>
-        </NavLink>
-      )}
-    </li>
   );
 };
 
