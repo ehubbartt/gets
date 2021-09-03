@@ -106,3 +106,20 @@
   padding: 0.25rem;
   font-weight: bold;
 }
+
+.priority-text-container {
+  display: flex;
+  align-items: center;
+}
+
+.priority-btn {
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.25rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}

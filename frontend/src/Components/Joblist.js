@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context";
 import { getAllOrders } from "../services/orders.db";
-import IconButton from "@material-ui/core/IconButton";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
+
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { Grid } from "react-loading-icons";
 import { HiSortDescending } from "react-icons/hi";
-import format from "date-fns/format";
 import { sortByDate } from "../functions/sorting";
+import Job from "./Job";
 
 /**
  * @returns the list of current jobs
@@ -16,8 +14,9 @@ import { sortByDate } from "../functions/sorting";
 const Joblist = () => {
   const { jobs, setJobs, removeJob } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(true);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [isDueDesc, setIsDueDesc] = useState(true);
+  const [priorityFilter, setPriorityFilter] = useState("all");
+  const priorities = ["all", "high", "medium", "low"];
 
   useEffect(() => {
     (async () => {
@@ -43,14 +42,25 @@ const Joblist = () => {
         </>
       ) : (
         <div className="scroll-container">
-          <Title handleDueClick={handleDueClick} isDueDesc={isDueDesc} />
+          <Title
+            handleDueClick={handleDueClick}
+            isDueDesc={isDueDesc}
+            setPriorityFilter={setPriorityFilter}
+            priorities={priorities}
+          />
           {jobs.length > 0 && (
-            <Jobs
-              jobs={jobs}
-              anchorEl={anchorEl}
-              setAnchorEl={setAnchorEl}
-              removeJob={removeJob}
-            />
+            <div className="jobs">
+              {jobs.map((job) => {
+                return (
+                  <Job
+                    key={job._id}
+                    removeJob={removeJob}
+                    job={job}
+                    priorityFilter={priorityFilter}
+                  />
+                );
+              })}
+            </div>
           )}
         </div>
       )}
@@ -59,9 +69,15 @@ const Joblist = () => {
 };
 
 const Title = ({ isDueDesc, handleDueClick }) => {
+  let color = "black";
   return (
     <div className="title">
-      <h1 className="title-text">Priority</h1>
+      <div className="priority-text-container">
+        <h1 className="title-text">Priority</h1>
+        <div className="priority-btn" style={{ background: color }}>
+          A
+        </div>
+      </div>
       <h1 className="title-text">SO</h1>
       <h1 className="title-text">PN</h1>
       <h1 className="title-text">Bin</h1>
@@ -76,105 +92,6 @@ const Title = ({ isDueDesc, handleDueClick }) => {
       <h1 className="title-text">Customer</h1>
       <h1 className="title-text">Note</h1>
       <MoreVertIcon className="three-dots" style={{ display: "none" }} />
-    </div>
-  );
-};
-
-const Jobs = ({ jobs, anchorEl, setAnchorEl, removeJob }) => {
-  return (
-    <div className="jobs">
-      {jobs.map((job) => {
-        return (
-          <Job
-            key={job._id}
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            removeJob={removeJob}
-            job={job}
-          ></Job>
-        );
-      })}
-    </div>
-  );
-};
-
-const Job = ({ job, anchorEl, setAnchorEl, removeJob }) => {
-  const { so, pn, bin, dc, due, customer, note, _id } = job;
-  const open = Boolean(anchorEl);
-
-  const cardStyle = {
-    background: "",
-  };
-
-  // const clamp = (days, difference) => {
-  //   // console.log(days, difference);
-  //   const min = 0.2;
-  //   const max = 0.9;
-  //   const ratio = 1 - difference / days;
-  //   // console.log(ratio);
-
-  //   return ratio < min ? min : ratio > max ? max : ratio;
-  // };
-
-  const today = new Date();
-  let date = new Date(due);
-  let priority = "";
-  let differenceInDays =
-    (date.getTime() - today.getTime()) / (1000 * 3600 * 24);
-  if (differenceInDays < 0) {
-    priority = "high";
-    cardStyle.background = `rgb(255, 105, 97, ${0.5})`;
-  } else if (differenceInDays < 7) {
-    priority = "medium";
-    cardStyle.background = `rgb(255, 255, 153, ${0.5})`;
-  } else {
-    priority = "low";
-    cardStyle.background = `rgb(193, 225, 193, ${0.5})`;
-  }
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  return (
-    <div className={`job-card ${priority}`} style={cardStyle}>
-      <h3 className="priority">{priority.toUpperCase()}</h3>
-      <h3 className="card-text">{so}</h3>
-      <h3 className="card-text">{pn}</h3>
-      <h3 className="card-text">{bin}</h3>
-      <h3 className="card-text">{dc}</h3>
-      <h3 className="card-text">{format(new Date(due), "P")}</h3>
-      <h3 className="card-text">{customer}</h3>
-      <h3 className="card-text">{note}</h3>
-      <IconButton
-        aria-label="more"
-        aria-controls="long-menu"
-        aria-haspopup="true"
-        onClick={(e) => {
-          handleClick(e);
-        }}
-      >
-        <MoreVertIcon className="three-dots-job" />
-      </IconButton>
-      <Menu
-        id="long-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            removeJob(_id);
-          }}
-        >
-          Remove
-        </MenuItem>
-      </Menu>
     </div>
   );
 };
