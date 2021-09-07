@@ -59,6 +59,7 @@ li > a > svg {
   font-size: 1.4rem;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .nav-link:hover:not(.link-selected),
@@ -66,6 +67,7 @@ li > a > svg {
   color: var(--link-selected-color);
 }
 
+/* TODO: selected items in navbar should not be collapsed */
 .link-selected {
   color: white;
   background-color: var(--group-background-focus);

@@ -13,11 +13,10 @@ const NavSection = ({ links, section }) => {
 
   return (
     <section id={section}>
-      <h3 className="nav-section">
+      <h3 className="nav-section" onClick={() => setIsCollapsed(!isCollapsed)}>
         {section}
         <FiChevronDown
           className={isCollapsed ? "nav-chevron turned" : "nav-chevron"}
-          onClick={() => setIsCollapsed(!isCollapsed)}
         />
       </h3>
       <div className="nav-container">
