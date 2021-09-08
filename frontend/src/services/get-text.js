@@ -62,7 +62,7 @@ export const postText = async (data = {}) => {
   };
   const blob = b64toBlob(data.image, "image/jpeg");
   let fd = new FormData();
-  fd.append("blob", blob);
+  fd.append("file", blob);
   const resp = await fetch("http://localhost:5000/api/image/text", {
     method: "POST",
     mode: "cors",
