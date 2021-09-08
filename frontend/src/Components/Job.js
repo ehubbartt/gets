@@ -11,10 +11,11 @@ const Job = ({ job, removeJob }) => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
-  const cardStyle = {
-    background: "",
-  };
+  const colors = [
+    `rgb(255, 105, 97, ${0.5})`,
+    `rgb(255, 255, 153, ${0.5})`,
+    `rgb(193, 225, 193, ${0.5})`,
+  ];
 
   // const clamp = (days, difference) => {
   //   // console.log(days, difference);
@@ -26,7 +27,10 @@ const Job = ({ job, removeJob }) => {
   //   return ratio < min ? min : ratio > max ? max : ratio;
   // };
 
-  const priority = dateDistance(due, cardStyle);
+  const { priority, index } = dateDistance(due);
+  const cardStyle = {
+    background: colors[index],
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context";
 import { getAllOrders } from "../services/orders.db";
-
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { Grid } from "react-loading-icons";
 import { HiSortDescending } from "react-icons/hi";
 import { sortByDate } from "../functions/sorting";
 import Job from "./Job";
+import dateDistance from "../functions/date-distance";
 
 /**
  * @returns the list of current jobs
@@ -16,7 +16,10 @@ const Joblist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDueDesc, setIsDueDesc] = useState(true);
   const [priorityFilter, setPriorityFilter] = useState("all");
+  const [priorityIndex, setPriorityIndex] = useState(0);
+  const [priorityText, setPriorityText] = useState("A");
   const priorities = ["all", "high", "medium", "low"];
+  const colors = ["black", "red", "rgb(197, 197, 9)", "green"];
 
   useEffect(() => {
     (async () => {
@@ -34,6 +37,20 @@ const Joblist = () => {
     setJobs([...sortedJobs]);
   };
 
+  const handlePriorityClick = () => {
+    setPriorityIndex(priorityIndex + 1);
+  };
+
+  useEffect(() => {
+    let curIndex = priorityIndex;
+    if (priorityIndex > priorities.length - 1) {
+      setPriorityIndex(0);
+      curIndex = 0;
+    }
+    setPriorityText(priorities[curIndex].charAt(0).toUpperCase());
+    // eslint-disable-next-line
+  }, [priorityIndex]);
+
   return (
     <div id="joblist-container">
       {isLoading ? (
@@ -47,10 +64,21 @@ const Joblist = () => {
             isDueDesc={isDueDesc}
             setPriorityFilter={setPriorityFilter}
             priorities={priorities}
+            colors={colors}
+            priorityIndex={priorityIndex}
+            handlePriorityClick={handlePriorityClick}
+            priorityText={priorityText}
           />
           {jobs.length > 0 && (
             <div className="jobs">
               {jobs.map((job) => {
+                let { priority } = dateDistance(job.due);
+                if (
+                  priority !== priorities[priorityIndex] &&
+                  priorities[priorityIndex] !== "all"
+                ) {
+                  return null;
+                }
                 return (
                   <Job
                     key={job._id}
@@ -68,14 +96,24 @@ const Joblist = () => {
   );
 };
 
-const Title = ({ isDueDesc, handleDueClick }) => {
-  let color = "black";
+const Title = ({
+  isDueDesc,
+  handleDueClick,
+  colors,
+  priorityIndex,
+  handlePriorityClick,
+  priorityText,
+}) => {
   return (
     <div className="title">
       <div className="priority-text-container">
         <h1 className="title-text">Priority</h1>
-        <div className="priority-btn" style={{ background: color }}>
-          A
+        <div
+          className="priority-btn"
+          style={{ background: colors[priorityIndex] }}
+          onClick={handlePriorityClick}
+        >
+          {priorityText}
         </div>
       </div>
       <h1 className="title-text">SO</h1>
