@@ -9,7 +9,7 @@ const dateDistance = (due) => {
   if (differenceInDays < 0) {
     priority = "high";
   } else if (differenceInDays < 7) {
-    priority = "medium";
+    priority = "med";
     index = 1;
   } else {
     priority = "low";

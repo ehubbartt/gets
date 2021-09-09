@@ -32,6 +32,7 @@
 
 .title-text {
   font-weight: bold;
+  font-size: 2rem;
 }
 
 .job-card {
@@ -54,6 +55,7 @@
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 2rem;
 }
 
 .three-dots-job {
@@ -90,7 +92,7 @@
   background-color: red;
 }
 
-.medium > .priority {
+.med > .priority {
   background-color: rgb(197, 197, 9);
 }
 
@@ -103,8 +105,9 @@
   color: white;
   border-radius: var(--border-radius);
   width: fit-content;
-  padding: 0.25rem;
+  padding: 0.5rem;
   font-weight: bold;
+  font-size: 2rem;
 }
 
 .priority-text-container {
@@ -129,4 +132,5 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
   font-size: 0.9rem;
+  transition: all 0.25s ease;
 }

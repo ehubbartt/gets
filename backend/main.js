@@ -37,7 +37,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.static("public"));
 app.use("/files", express.static("files"));
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -105,9 +105,9 @@ app.post("/api/image/parsed-text", upload.single("blob"), async (req, res) => {
  * returns all the lines from the API request
  * BODY: form data of a file/blob
  */
-app.post("/api/image/text", upload.single("blob"), async (req, res) => {
+app.post("/api/image/text", upload.single("file"), async (req, res) => {
   const arrayBuffer = toArrayBuffer(req.file.buffer);
-
+  console.log(arrayBuffer);
   let result = await computerVisionClient.readInStream(arrayBuffer);
   let operation = result.operationLocation.split("/").slice(-1)[0];
 
@@ -123,6 +123,22 @@ app.post("/api/image/text", upload.single("blob"), async (req, res) => {
   } catch (error) {
     res.status(400).send(error);
   }
+});
+
+app.post("/api/image/text1", upload.single("file"), async (req, res) => {
+  console.log("FILE:", req.file);
+
+  const arrayBuffer = toArrayBuffer(req.file.buffer);
+  console.log(arrayBuffer);
+  let result = await computerVisionClient.readInStream(arrayBuffer);
+  let operation = result.operationLocation.split("/").slice(-1)[0];
+  while (result.status !== STATUS_SUCCEEDED) {
+    result = await computerVisionClient.getReadResult(operation);
+  }
+  const data = result.analyzeResult.readResults;
+
+  console.log("DATA: ", data);
+  res.status(200).send(data);
 });
 
 app.get("/all-orders", async (req, res) => {

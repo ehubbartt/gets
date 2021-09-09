@@ -18,7 +18,7 @@ const Joblist = () => {
   const [priorityFilter, setPriorityFilter] = useState("all");
   const [priorityIndex, setPriorityIndex] = useState(0);
   const [priorityText, setPriorityText] = useState("A");
-  const priorities = ["all", "high", "medium", "low"];
+  const priorities = ["all", "high", "med", "low"];
   const colors = ["black", "red", "rgb(197, 197, 9)", "green"];
 
   useEffect(() => {
