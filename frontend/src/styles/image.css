@@ -6,12 +6,12 @@
   border-right: 1px solid #dbdbf3;
   width: 65%;
   padding: 1rem;
-  min-height: 100%;
+  max-height: 1%;
 }
 
 #file-drop {
-  min-width: 60%;
-  min-height: 50%;
+  width: 60%;
+  height: 60%;
   max-width: 80%;
   max-height: 80%;
   background: linear-gradient(
@@ -25,7 +25,6 @@
   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   background-size: 16px 4px, 16px 4px, 4px 16px, 4px 16px;
   background-position: 0% 0%, 100% 100%, 0% 100%, 100% 0px;
-  border-radius: 5px;
   padding: 10px;
   border-radius: var(--border-radius);
   display: flex;

@@ -74,18 +74,16 @@ const JobInputs = () => {
 
   return (
     <>
-      <div id="main-job-input-container">
-        <OrderImage postData={postData} setImageBase64={setImageBase64} />
-        <Inputs
-          order={order}
-          setOrder={setOrder}
-          setAreInputsOkay={setAreInputsOkay}
-          areInputsOkay={areInputsOkay}
-          handleSubmit={handleSubmit}
-          date={date}
-          setDate={setDate}
-        />
-      </div>
+      <OrderImage postData={postData} setImageBase64={setImageBase64} />
+      <Inputs
+        order={order}
+        setOrder={setOrder}
+        setAreInputsOkay={setAreInputsOkay}
+        areInputsOkay={areInputsOkay}
+        handleSubmit={handleSubmit}
+        date={date}
+        setDate={setDate}
+      />
     </>
   );
 };
