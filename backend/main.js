@@ -66,7 +66,7 @@ app.post("api/image/lines", upload.single("blob"), async (req, res) => {
   const data = result.analyzeResult.readResults;
 
   const lines = data[0].lines;
-  console.log(lines);
+  console.error(lines);
   try {
     res.send(lines);
   } catch (error) {
@@ -107,7 +107,6 @@ app.post("/api/image/parsed-text", upload.single("blob"), async (req, res) => {
  */
 app.post("/api/image/text", upload.single("file"), async (req, res) => {
   const arrayBuffer = toArrayBuffer(req.file.buffer);
-  console.log(arrayBuffer);
   let result = await computerVisionClient.readInStream(arrayBuffer);
   let operation = result.operationLocation.split("/").slice(-1)[0];
 
@@ -126,10 +125,7 @@ app.post("/api/image/text", upload.single("file"), async (req, res) => {
 });
 
 app.post("/api/image/text1", upload.single("file"), async (req, res) => {
-  console.log("FILE:", req.file);
-
   const arrayBuffer = toArrayBuffer(req.file.buffer);
-  console.log(arrayBuffer);
   let result = await computerVisionClient.readInStream(arrayBuffer);
   let operation = result.operationLocation.split("/").slice(-1)[0];
   while (result.status !== STATUS_SUCCEEDED) {
@@ -137,7 +133,6 @@ app.post("/api/image/text1", upload.single("file"), async (req, res) => {
   }
   const data = result.analyzeResult.readResults;
 
-  console.log("DATA: ", data);
   res.status(200).send(data);
 });
 
@@ -151,7 +146,7 @@ app.get("/all-orders", async (req, res) => {
     mongoose.connection.close();
     res.send(orders);
   } catch (error) {
-    console.log(error._message);
+    console.error(error._message);
     res.status(422).send({ error: error._message });
   }
 });
@@ -166,7 +161,7 @@ app.post("/create-order", async (req, res) => {
     const response = await OrderModel.create(order);
     res.json(response);
   } catch (error) {
-    console.log(error._message);
+    console.error(error._message);
     res.status(422).send({ error: error._message });
   }
 });
@@ -181,7 +176,7 @@ app.post("/remove-order", async (req, res) => {
     const response = await OrderModel.deleteOne({ _id: `${id}` });
     res.json(response);
   } catch (error) {
-    console.log(error._message);
+    console.error(error._message);
     res.status(422).send({ error: error._message });
   }
 });
